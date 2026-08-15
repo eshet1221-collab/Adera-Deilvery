@@ -1,0 +1,18 @@
+{
+  "name": "adera-delivery-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Prototype API + database for Adera Delivery — order creation, tier pricing, and a basic courier/order workflow.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "dev": "node --env-file-if-exists=.env server.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^2.2.0"
+  }
+}

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adera Delivery — Addis Ababa's Crowdsourced Urban Logistics Platform</title>
+<meta name="description" content="Adera Delivery turns everyday commutes into deliveries — a 4-tier crowdsourced logistics platform for Addis Ababa that cuts delivery costs up to 70% without adding a single vehicle to the road.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b6e4f'/%3E%3Cpath d='M27 66 L50 30 L73 66' stroke='%23fcfcfb' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='50' cy='66' r='6' fill='%23fcfcfb'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="#top" class="brand" aria-label="Adera Delivery home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="currentColor"/><path d="M27 66 L50 30 L73 66" stroke="var(--surface-1)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="66" r="6" fill="var(--surface-1)"/></svg>
+      </span>
+      <span class="brand-name">Adera&nbsp;Delivery</span>
+    </a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Primary">
+      <a href="#problem">Problem</a>
+      <a href="#solution">4 Tiers</a>
+      <a href="#calculator">Pricing</a>
+      <a href="#security">Security</a>
+      <a href="track.html">Track order</a>
+      <div class="nav-dropdown" id="adminNavDropdown">
+        <button class="nav-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+          Admin
+          <svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="admin.html">Orders</a>
+          <a href="couriers.html">Couriers</a>
+          <a href="call-center.html">Call Center</a>
+          <a href="earnings.html">Earnings</a>
+        </div>
+      </div>
+      <a href="dashboard.html">Members</a>
+      <a href="deliveries.html">My Deliveries</a>
+      <a href="testimonials.html">Testimonials</a>
+      <a href="contact.html">Contact</a>
+      <a href="call.html">Call</a>
+      <a href="order.html" class="nav-cta">Get Started</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-bg" aria-hidden="true">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+        <g class="route-lines" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M-50 620 C 200 520, 350 700, 600 560 S 950 420, 1250 520"/>
+          <path d="M-50 300 C 250 380, 400 180, 650 260 S 1000 120, 1250 220"/>
+          <path d="M-50 460 C 300 440, 500 520, 700 400 S 1000 260, 1250 340"/>
+        </g>
+        <g class="route-dots" fill="currentColor">
+          <circle cx="150" cy="560" r="5"/>
+          <circle cx="600" cy="560" r="5"/>
+          <circle cx="1050" cy="480" r="5"/>
+          <circle cx="350" cy="260" r="5"/>
+          <circle cx="800" cy="200" r="5"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="wrap hero-inner">
+      <p class="eyeline">Addis Ababa's First 4-Tier Crowdsourced Logistics Platform</p>
+      <h1>Every commute is<br>a delivery waiting to happen.</h1>
+      <p class="hero-sub">Adera Delivery matches parcels, documents and cargo with pedestrians, cyclists and drivers already heading that way — cutting delivery costs by up to 70% without putting one extra vehicle on the road.</p>
+      <div class="hero-actions">
+        <a href="order.html" class="btn btn-primary">Book a delivery</a>
+        <a href="couriers.html#courierForm" class="btn btn-ghost">Become a courier</a>
+      </div>
+      <p class="hero-note">Or just <a href="#calculator">preview pricing</a> first — no account needed.</p>
+      <dl class="hero-stats">
+        <div><dt>60–70%</dt><dd>cheaper than traditional couriers</dd></div>
+        <div><dt>4</dt><dd>service tiers, one platform</dd></div>
+        <div><dt>0</dt><dd>vehicles purchased by us</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="section" id="problem">
+    <div class="wrap">
+      <p class="kicker">The problem</p>
+      <h2>Addis Ababa's delivery market wasn't built for how the city actually moves.</h2>
+      <p class="section-lede">Three overlapping failures push small traders back into taxis and leave thousands of daily commuters travelling with empty hands.</p>
+
+      <div class="card-grid problem-grid">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>Exorbitant, volatile pricing</h3>
+          <p>A single 100-gram document from Piassa to Bole costs 250–400 birr — completely disconnected from its value, and out of reach for small online vendors clearing 100–200 birr in profit.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h1l2-6h10l3 6h2M7 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM21 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM7 11V6h6l3 5"/></svg>
+          </div>
+          <h3>Traffic &amp; empty trips</h3>
+          <p>Tens of thousands of commuters cross the city empty-handed every day, while hundreds of extra motorbikes are added purely to move goods — worsening congestion and emissions.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="7" height="7" rx="1"/><rect x="14" y="4" width="7" height="16" rx="1"/><rect x="3" y="17" width="7" height="4" rx="1"/></svg>
+          </div>
+          <h3>One-size-fits-all</h3>
+          <p>A 50-birr letter and an 80,000-birr laptop travel the same way, with the same risk. There's no tiered pricing, security, or accountability to match the value of what's being sent.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION / 4 TIERS -->
+  <section class="section section-tint" id="solution">
+    <div class="wrap">
+      <p class="kicker">The solution</p>
+      <h2>One route‑matching engine. Four purpose‑built tiers.</h2>
+      <p class="section-lede">Every order is priced and routed by what it is, not treated the same as everything else — from a forgotten key to a full office relocation.</p>
+
+      <div class="tier-grid">
+        <article class="tier-card" style="--tier-color:var(--series-1)">
+          <div class="tier-head">
+            <span class="tier-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M9 21l2-6 2 2 3 4M6 12l2-4 3 1 2-2 3 2M9 15l-3 1-2 5"/></svg>
+            </span>
+            <span class="tier-eyebrow">Level 1</span>
+          </div>
+          <h3>Express</h3>
+          <p class="tier-transport">On foot · taxi · train</p>
+          <p class="tier-desc">Documents, keys, clothing, small pharmacy items — carried by commuters already on that route.</p>
+          <ul class="tier-meta">
+            <li><span>Item value</span><strong>Up to 3,000 birr</strong></li>
+            <li><span>Speed</span><strong>2–4 hours</strong></li>
+            <li><span>Security</span><strong>Photo + 4‑digit OTP</strong></li>
+          </ul>
+          <p class="tier-price">from <strong>60 birr</strong> <span>+ 15 birr/km beyond 2 km</span></p>
+        </article>
+
+        <article class="tier-card" style="--tier-color:var(--series-2)">
+          <div class="tier-head">
+            <span class="tier-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-9h4l2 4h3M10 8h3l2 5"/></svg>
+            </span>
+            <span class="tier-eyebrow">Level 2</span>
+          </div>
+          <h3>Standard</h3>
+          <p class="tier-transport">Bicycle · e‑scooter · motorbike</p>
+          <p class="tier-desc">Fresh food, medicine, cakes and urgent business items, delivered fast with thermal‑bag + GPS tracking.</p>
+          <ul class="tier-meta">
+            <li><span>Item value</span><strong>Up to 7,000 birr</strong></li>
+            <li><span>Speed</span><strong>30–60 minutes</strong></li>
+            <li><span>Security</span><strong>Thermal bag + live GPS</strong></li>
+          </ul>
+          <p class="tier-price">from <strong>80 birr</strong> <span>+ 15 birr/km beyond 2 km</span></p>
+        </article>
+
+        <article class="tier-card" style="--tier-color:var(--series-3)">
+          <div class="tier-head">
+            <span class="tier-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <span class="tier-eyebrow">Level 3</span>
+          </div>
+          <h3>Secure</h3>
+          <p class="tier-transport">Vetted courier · private car</p>
+          <p class="tier-desc">Phones, laptops, jewelry and confidential documents — released only through a wallet‑hold escrow.</p>
+          <ul class="tier-meta">
+            <li><span>Item value</span><strong>8,000–100,000 birr</strong></li>
+            <li><span>Speed</span><strong>Direct courier</strong></li>
+            <li><span>Security</span><strong>Wallet hold + OTP</strong></li>
+          </ul>
+          <p class="tier-price">from <strong>180 birr</strong> <span>+ 25 birr/km beyond 2 km</span></p>
+        </article>
+
+        <article class="tier-card" style="--tier-color:var(--series-4)">
+          <div class="tier-head">
+            <span class="tier-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="14" height="8" rx="1"/><path d="M15 11h4l3 3v2h-7"/><circle cx="6" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+            </span>
+            <span class="tier-eyebrow">Level 4</span>
+          </div>
+          <h3>Cargo</h3>
+          <p class="tier-transport">Suzuki Carry · Isuzu</p>
+          <p class="tier-desc">Household and office relocations, bulk cartons and construction samples, handled by trained installers.</p>
+          <ul class="tier-meta">
+            <li><span>Item value</span><strong>Unlimited, insured</strong></li>
+            <li><span>Speed</span><strong>Scheduled</strong></li>
+            <li><span>Security</span><strong>Trained crew + packaging</strong></li>
+          </ul>
+          <p class="tier-price">from <strong>600 birr</strong> <span>+ 80 birr/km beyond 2 km</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <p class="kicker">How it works</p>
+      <h2>Three taps to ship. Three taps to earn.</h2>
+
+      <div class="how-grid">
+        <div class="how-col">
+          <h3 class="how-title">Sending something</h3>
+          <ol class="steps">
+            <li><span class="step-num">1</span><div><strong>Choose your tier</strong><p>Pick Express, Standard, Secure or Cargo based on what you're sending and how fast it needs to move.</p></div></li>
+            <li><span class="step-num">2</span><div><strong>Drop a pin or a landmark</strong><p>Search by map, or use a known landmark like "CMC" or "down from the Bole taxi rank" — built for how Addis actually gives directions.</p></div></li>
+            <li><span class="step-num">3</span><div><strong>Track and confirm</strong><p>Watch your courier live on the map, then confirm delivery with the 4‑digit code sent straight to the recipient.</p></div></li>
+          </ol>
+        </div>
+        <div class="how-col" id="courier">
+          <h3 class="how-title">Earning as a courier</h3>
+          <ol class="steps">
+            <li><span class="step-num">1</span><div><strong>Verify once</strong><p>Register with your Fayda national digital ID and a live selfie check — no vehicle, no upfront capital required.</p></div></li>
+            <li><span class="step-num">2</span><div><strong>Set your route</strong><p>Tell the app where you're headed — home from campus, work to Bole — and it only shows orders on your way.</p></div></li>
+            <li><span class="step-num">3</span><div><strong>Get paid instantly</strong><p>Snap proof of pickup and drop‑off, and your share lands in your in‑app wallet — cash out to Telebirr or your bank anytime.</p></div></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="callout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <p>No smartphone or app? Order the same way through the free <strong>Telegram bot</strong> or the <strong>call center</strong> — built for every part of the city, not just the ones with fast internet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING CALCULATOR -->
+  <section class="section section-tint" id="calculator">
+    <div class="wrap">
+      <p class="kicker">Live pricing</p>
+      <h2>See the price before you send it.</h2>
+      <p class="section-lede">Total price = base fare (covers the first 2 km) + distance beyond 2 km × the per‑kilometer rate for your tier.</p>
+
+      <div class="calc" id="calc">
+        <div class="calc-controls">
+          <fieldset class="tier-select" id="tierSelect">
+            <legend>Service tier</legend>
+            <label class="tier-pill" data-tier="express">
+              <input type="radio" name="tier" value="express" checked>
+              <span>Express</span>
+            </label>
+            <label class="tier-pill" data-tier="standard">
+              <input type="radio" name="tier" value="standard">
+              <span>Standard</span>
+            </label>
+            <label class="tier-pill" data-tier="secure">
+              <input type="radio" name="tier" value="secure">
+              <span>Secure</span>
+            </label>
+            <label class="tier-pill" data-tier="cargo">
+              <input type="radio" name="tier" value="cargo">
+              <span>Cargo</span>
+            </label>
+          </fieldset>
+
+          <div class="distance-control">
+            <div class="distance-label">
+              <label for="distanceRange">Distance</label>
+              <output id="distanceValue" for="distanceRange">5 km</output>
+            </div>
+            <input type="range" id="distanceRange" min="1" max="35" value="5" step="1">
+          </div>
+        </div>
+
+        <div class="calc-result">
+          <p class="calc-result-label">Estimated price</p>
+          <p class="calc-total"><span id="calcTotal">135</span><span class="calc-currency">birr</span></p>
+          <p class="calc-breakdown" id="calcBreakdown">60 birr base + 5 km × 15 birr</p>
+          <p class="calc-savings" id="calcSavings"></p>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="pricing-table">
+          <caption>Reference pricing grid — all four tiers</caption>
+          <thead>
+            <tr><th scope="col">Tier</th><th scope="col">Transport</th><th scope="col">Base fare (first 2&nbsp;km)</th><th scope="col">Per km beyond 2&nbsp;km</th><th scope="col">Example: 7&nbsp;km</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Express</th><td>Foot / taxi / train</td><td>60 birr</td><td>15 birr</td><td>135 birr</td></tr>
+            <tr><th scope="row">Standard</th><td>Bicycle / motor scooter</td><td>80 birr</td><td>15 birr</td><td>155 birr</td></tr>
+            <tr><th scope="row">Secure</th><td>Selected courier / car</td><td>180 birr</td><td>25 birr</td><td>305 birr</td></tr>
+            <tr><th scope="row">Cargo</th><td>Suzuki / Isuzu</td><td>600 birr</td><td>80 birr</td><td>1,000 birr</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY -->
+  <section class="section" id="security">
+    <div class="wrap">
+      <p class="kicker">Security &amp; chain of custody</p>
+      <h2>Trust, built into every handoff.</h2>
+      <p class="section-lede">Five safeguards address the three questions every new user asks: what if it breaks, what if it's lost, and what if I don't know who's carrying it.</p>
+
+      <ol class="flow">
+        <li>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></span>
+          <div><strong>Fayda Digital ID verified</strong><p>Every courier is registered against Ethiopia's national biometric ID before their first delivery.</p></div>
+        </li>
+        <li>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.5-2.5h5L16 6"/></svg></span>
+          <div><strong>Item value held in escrow</strong><p>For higher‑value items, the equivalent amount is held in the courier's in‑app wallet until delivery is confirmed.</p></div>
+        </li>
+        <li>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h4l2-3h4l2 3h4v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+          <div><strong>Photo / video at pickup</strong><p>A timestamped photo or short video records the item's condition before it ever leaves the sender's hands.</p></div>
+        </li>
+        <li>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11z"/></svg></span>
+          <div><strong>Live GPS tracking</strong><p>Sender and recipient both watch the delivery move in real time, end to end.</p></div>
+        </li>
+        <li>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.5"/></svg></span>
+          <div><strong>4‑digit OTP confirmation</strong><p>Funds release only once the recipient enters the one‑time code sent to their phone — proof the right person received it.</p></div>
+        </li>
+        <li>
+          <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10h20M6 15h4"/><rect x="2" y="5" width="20" height="14" rx="2"/></svg></span>
+          <div><strong>Instant payout</strong><p>82% of the fare lands in the courier's wallet immediately — the platform's 18% commission and 2% withholding tax are deducted automatically.</p></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- IMPACT / MARKET -->
+  <section class="section section-tint" id="impact">
+    <div class="wrap">
+      <p class="kicker">Market &amp; impact</p>
+      <h2>A large, underserved market — and a social dividend on top.</h2>
+
+      <div class="stat-grid">
+        <div class="stat-tile"><strong>100,000+</strong><span>small deliveries happen across Addis Ababa every day</span></div>
+        <div class="stat-tile"><strong>50,000+</strong><span>of those are our addressable segment — vendors, offices, pharmacies, individuals</span></div>
+        <div class="stat-tile"><strong>60–70%</strong><span>lower delivery cost for small traders and households</span></div>
+        <div class="stat-tile"><strong>5,000+</strong><span>couriers targeted as active earners by end of Year 1</span></div>
+        <div class="stat-tile"><strong>850,000 birr</strong><span>total capital required — no fleet, no warehouses</span></div>
+        <div class="stat-tile"><strong>2.09B birr</strong><span>projected direct payouts to couriers over five years</span></div>
+      </div>
+
+      <div class="chart-grid">
+        <figure class="chart-card">
+          <figcaption>
+            <h3>Daily orders, Year 1 → Year 5</h3>
+            <p>Projected order volume as the platform scales across Addis Ababa and neighboring cities.</p>
+          </figcaption>
+          <div class="bar-chart" data-unit="orders/day">
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:5"><span class="bar-value">1,200</span></div></div><span class="bar-label">Year 1</span></div>
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:14"><span class="bar-value">3,500</span></div></div><span class="bar-label">Year 2</span></div>
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:32"><span class="bar-value">8,000</span></div></div><span class="bar-label">Year 3</span></div>
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:60"><span class="bar-value">15,000</span></div></div><span class="bar-label">Year 4</span></div>
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:100"><span class="bar-value">25,000</span></div></div><span class="bar-label">Year 5</span></div>
+          </div>
+        </figure>
+
+        <figure class="chart-card">
+          <figcaption>
+            <h3>Net profit, Year 1 → Year 5</h3>
+            <p>Million Ethiopian birr, after commission, tax and operating costs.</p>
+          </figcaption>
+          <div class="bar-chart" data-unit="million birr">
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:2"><span class="bar-value">4.4M</span></div></div><span class="bar-label">Year 1</span></div>
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:8"><span class="bar-value">19.3M</span></div></div><span class="bar-label">Year 2</span></div>
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:21"><span class="bar-value">54.3M</span></div></div><span class="bar-label">Year 3</span></div>
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:49"><span class="bar-value">125.6M</span></div></div><span class="bar-label">Year 4</span></div>
+            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:100"><span class="bar-value">254.0M</span></div></div><span class="bar-label">Year 5</span></div>
+          </div>
+        </figure>
+      </div>
+
+      <div class="metric-strip">
+        <div><strong>~2 months</strong><span>payback period on initial capital</span></div>
+        <div><strong>185%</strong><span>projected 5‑year IRR</span></div>
+        <div><strong>18%</strong><span>blended platform commission (12–20% by tier)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUSINESS MODEL -->
+  <section class="section" id="business">
+    <div class="wrap">
+      <p class="kicker">Business model</p>
+      <h2>Asset‑light, commission‑based, and built to scale with the city.</h2>
+
+      <div class="card-grid three-col">
+        <article class="card">
+          <h3>Platform commission</h3>
+          <p>12–20% of every completed delivery, scaled to risk and value:</p>
+          <ul class="mini-list">
+            <li><span>Express / Standard</span><strong>20%</strong></li>
+            <li><span>Secure</span><strong>15%</strong></li>
+            <li><span>Cargo</span><strong>12%</strong></li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Merchant subscriptions</h3>
+          <p>Monthly plans for online sellers on Telegram, Instagram and TikTok:</p>
+          <ul class="mini-list">
+            <li><span>Basic</span><strong>Free · 18%</strong></li>
+            <li><span>Business — 2,000 birr/mo</span><strong>14%</strong></li>
+            <li><span>Premium — 4,500 birr/mo</span><strong>10%</strong></li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Additional revenue</h3>
+          <p>Layered on top of transaction volume as the network matures:</p>
+          <ul class="mini-list">
+            <li><span>Micro‑insurance</span><strong>0.5–1%</strong></li>
+            <li><span>Featured merchants</span><strong>500–2,000 birr/mo</strong></li>
+            <li><span>Packaging sales</span><strong>Boxes &amp; wrap</strong></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="section section-tint" id="roadmap">
+    <div class="wrap">
+      <p class="kicker">Implementation roadmap</p>
+      <h2>Live in six months. City‑wide in nine.</h2>
+
+      <ol class="roadmap">
+        <li>
+          <div class="roadmap-phase"><span>Months 1–3</span><h3>Legal &amp; technology</h3></div>
+          <p>Business licensing, Fayda ID &amp; payment‑gateway integration, and full build of the customer app, courier app, admin dashboard and Telegram bot.</p>
+        </li>
+        <li>
+          <div class="roadmap-phase"><span>Months 4–5</span><h3>Pilot</h3></div>
+          <p>300 verified couriers and 50 online merchants live on the Bole–Meskel Square–4 Kilo corridor, with full safety and OTP training.</p>
+        </li>
+        <li>
+          <div class="roadmap-phase"><span>Month 6</span><h3>Official launch</h3></div>
+          <p>City‑wide rollout timed to a holiday season, targeting 1,200+ orders per day from launch.</p>
+        </li>
+        <li>
+          <div class="roadmap-phase"><span>Months 7–9</span><h3>Scale</h3></div>
+          <p>B2B contracts with pharmacies and law firms, full Cargo tier launch, and expansion to Sheger‑area towns.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="currentColor"/><path d="M27 66 L50 30 L73 66" stroke="var(--surface-1)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="66" r="6" fill="var(--surface-1)"/></svg>
+      </span>
+      <div>
+        <p class="footer-name">Adera Delivery</p>
+        <p class="footer-tag">Crowdsourced Urban Logistics Platform for Addis Ababa</p>
+      </div>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Tiers</a>
+      <a href="#calculator">Pricing</a>
+      <a href="#security">Security</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="order.html">Ship</a>
+      <a href="track.html">Track</a>
+      <a href="admin.html">Admin</a>
+      <a href="couriers.html">Couriers</a>
+      <a href="earnings.html">Earnings</a>
+      <a href="dashboard.html">Members</a>
+      <a href="deliveries.html">My Deliveries</a>
+      <a href="testimonials.html">Testimonials</a>
+      <a href="contact.html">Contact</a>
+      <a href="call.html">Call</a>
+      <a href="call-center.html">Call Center</a>
+    </nav>
+    <p class="footer-legal">© <span id="year"></span> Adera Delivery PLC (proposed). Figures are projections from the founding business plan, for illustration only. Booking/tracking/admin pages are a working prototype backed by a real database.</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
