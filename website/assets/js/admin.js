@@ -156,7 +156,7 @@
       .map(
         (o) => `
         <tr data-order-row="${o.id}">
-          <td><span class="tracking-code">${esc(o.trackingCode)}</span></td>
+          <td><a class="tracking-code" href="/track.html?code=${encodeURIComponent(o.trackingCode)}" target="_blank" rel="noopener">${esc(o.trackingCode)}</a></td>
           <td>${esc(o.tier)}</td>
           <td class="wrap-cell">${esc(o.pickupAddress)} → ${esc(o.dropoffAddress)}</td>
           <td>${Math.round(o.priceBirr).toLocaleString("en-US")} birr</td>

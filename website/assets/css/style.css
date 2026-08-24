@@ -487,6 +487,8 @@ button { font: inherit; }
 }
 .confirmation-card h2 { margin-top: 16px; font-size: 1.5rem; font-weight: 800; }
 .tracking-code { font-variant-numeric: tabular-nums; letter-spacing: .02em; color: var(--brand); }
+a.tracking-code { text-decoration: none; }
+a.tracking-code:hover { text-decoration: underline; }
 .otp-display {
   margin-top: 22px; display: inline-flex; flex-direction: column; gap: 4px; align-items: center;
   background: var(--page-plane); border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 16px 28px;
