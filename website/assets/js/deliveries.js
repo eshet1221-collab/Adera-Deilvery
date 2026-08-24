@@ -110,7 +110,9 @@
           <td><a class="tracking-code" href="/track.html?code=${encodeURIComponent(o.trackingCode)}" target="_blank" rel="noopener">${esc(o.trackingCode)}</a></td>
           <td>${esc(o.tier)}</td>
           <td class="wrap-cell">${esc(o.pickupAddress)} → ${esc(o.dropoffAddress)}</td>
-          <td>${Math.round(o.priceBirr).toLocaleString("en-US")} birr</td>
+          <td>${Math.round(o.priceBirr).toLocaleString("en-US")} birr${
+            o.paymentMethod === "cod" ? ' <span class="status-badge status-picked_up">Collect cash</span>' : ""
+          }</td>
           <td><span class="status-badge status-${o.status}">${STATUS_LABELS[o.status] || o.status}</span></td>
           <td>${proofCell(o)}</td>
           <td>${actionCell(o)}</td>

@@ -19,18 +19,18 @@
   // (see server/routes/couriers.js). A courier's own login only ever
   // reaches GET /api/couriers/me/stats, which returns just their own row.
   async function loadStats() {
-    statsBody.innerHTML = `<tr><td colspan="7" class="empty-state">Loading…</td></tr>`;
+    statsBody.innerHTML = `<tr><td colspan="8" class="empty-state">Loading…</td></tr>`;
     try {
       const data = await fetchJson(`/api/couriers/stats?sort=${encodeURIComponent(sortSelect.value)}`);
       renderStats(data.stats || []);
     } catch (err) {
-      statsBody.innerHTML = `<tr><td colspan="7" class="empty-state">${esc(err.message)}</td></tr>`;
+      statsBody.innerHTML = `<tr><td colspan="8" class="empty-state">${esc(err.message)}</td></tr>`;
     }
   }
 
   function renderStats(stats) {
     if (!stats.length) {
-      statsBody.innerHTML = `<tr><td colspan="7" class="empty-state">No couriers registered yet.</td></tr>`;
+      statsBody.innerHTML = `<tr><td colspan="8" class="empty-state">No couriers registered yet.</td></tr>`;
       return;
     }
     statsBody.innerHTML = stats
@@ -43,6 +43,7 @@
           <td>${s.deliveryCount}</td>
           <td>${Math.round(s.totalAmountBirr).toLocaleString("en-US")} birr</td>
           <td>${Math.round(s.totalEarningsBirr).toLocaleString("en-US")} birr</td>
+          <td>${Math.round(s.walletBalanceBirr).toLocaleString("en-US")} birr</td>
           <td>${s.lastDeliveryAt ? new Date(s.lastDeliveryAt.replace(" ", "T") + "Z").toLocaleDateString() : "—"}</td>
         </tr>`
       )

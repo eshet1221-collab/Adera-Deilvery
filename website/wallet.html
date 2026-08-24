@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Members Dashboard — Adera Delivery</title>
-<meta name="description" content="Adera Delivery courier dashboard — delivery counts, amounts, and earnings.">
+<title>Wallet — Adera Delivery</title>
+<meta name="description" content="Adera Delivery courier wallet — balance, transaction history, and top-up.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b6e4f'/%3E%3Cpath d='M27 66 L50 30 L73 66' stroke='%23fcfcfb' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='50' cy='66' r='6' fill='%23fcfcfb'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -38,9 +38,9 @@
           <a href="earnings.html">Earnings</a>
         </div>
       </div>
-      <a href="dashboard.html" class="is-active">Members</a>
+      <a href="dashboard.html">Members</a>
       <a href="deliveries.html">My Deliveries</a>
-      <a href="wallet.html">Wallet</a>
+      <a href="wallet.html" class="is-active">Wallet</a>
       <a href="testimonials.html">Testimonials</a>
       <a href="contact.html">Contact</a>
       <a href="call.html">Call</a>
@@ -64,30 +64,69 @@
     <div class="wrap dash-head">
       <div>
         <p class="kicker">Members</p>
-        <h1 class="page-title" id="dashWelcome">Loading…</h1>
-        <p class="section-lede">Your own delivery count, amount handled, and earnings — not anyone else's. See <a href="deliveries.html">My Deliveries</a> to manage your assigned orders.</p>
+        <h1 class="page-title">Wallet</h1>
+        <p class="section-lede">Your courier wallet. Prepaid deliveries credit you 82% of the price once the recipient confirms with their code. Cash-on-Delivery deliveries debit the 18% commission you owe, since you already collected the full amount in person.</p>
       </div>
       <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Log out</button>
     </div>
   </section>
 
-  <div class="wrap" style="margin-top: -12px;">
-    <p class="form-error" id="suspendedBanner" role="alert" hidden>Your wallet is suspended — top up on the <a href="wallet.html">Wallet</a> page to accept new Cash-on-Delivery orders.</p>
-  </div>
+  <p class="form-error" id="suspendedBanner" role="alert" hidden style="margin: -12px auto 0; max-width: 1160px; padding-left: 24px; padding-right: 24px;">Your wallet is suspended — a Cash-on-Delivery commission debit took your balance below zero. Top up below to reactivate your account and accept new orders.</p>
+
+  <section class="section section-tint">
+    <div class="wrap">
+      <div class="stat-grid" id="walletStatsGrid" style="grid-template-columns: repeat(2, 1fr); max-width: 480px;">
+        <div class="stat-tile"><strong id="walletBalance">—</strong><span>Current balance</span></div>
+        <div class="stat-tile"><strong id="walletStatus">—</strong><span>Account status</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="admin-head">
+        <h2>Top up</h2>
+      </div>
+      <form class="form-card" id="topupForm" novalidate style="max-width: 480px;">
+        <p class="form-note">Pay the amount you want to add via Telebirr, CBE Birr, or Chapa to the Adera Delivery merchant account, then enter the transaction reference below. Your balance updates immediately — no live payment gateway is wired up yet, so this is a manual reference-entry step, same as the sender's "Pay Now" flow.</p>
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="topupAmount">Amount (birr)</label>
+            <input type="number" id="topupAmount" min="1" max="1000000" step="1" required>
+          </div>
+          <div class="form-row">
+            <label for="topupReference">Transaction reference</label>
+            <input type="text" id="topupReference" required>
+          </div>
+        </div>
+        <p class="form-error" id="topupError" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary" id="topupSubmit">Top up</button>
+      </form>
+    </div>
+  </section>
 
   <section class="section section-tint">
     <div class="wrap">
       <div class="admin-head">
-        <h2>Your stats</h2>
+        <h2>Transaction history</h2>
+        <button class="btn btn-ghost btn-sm" id="refreshWallet" type="button">Refresh</button>
       </div>
-      <div class="stat-grid stat-grid-5" id="myStatsGrid">
-        <div class="stat-tile"><strong id="statDeliveries">—</strong><span>Deliveries completed</span></div>
-        <div class="stat-tile"><strong id="statAmount">—</strong><span>Amount handled</span></div>
-        <div class="stat-tile"><strong id="statEarnings">—</strong><span>Your earnings</span></div>
-        <div class="stat-tile"><strong id="statWallet">—</strong><span>Wallet balance</span></div>
-        <div class="stat-tile"><strong id="statLast">—</strong><span>Last delivery</span></div>
+      <div class="table-scroll">
+        <table class="pricing-table admin-table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Type</th>
+              <th scope="col">Order</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Balance after</th>
+            </tr>
+          </thead>
+          <tbody id="walletTxBody">
+            <tr><td colspan="5" class="empty-state">Loading…</td></tr>
+          </tbody>
+        </table>
       </div>
-      <p class="form-note">"Earnings" is price minus the flat 18% platform commission — counted only for delivered orders. Your wallet balance is separate: it's credited 82% of the price on prepaid deliveries, and debited 18% commission on Cash-on-Delivery deliveries (see <a href="wallet.html">Wallet</a>).</p>
     </div>
   </section>
 </main>
@@ -127,6 +166,6 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/wallet.js"></script>
 </body>
 </html>

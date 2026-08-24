@@ -42,7 +42,7 @@
   }
 
   async function loadCouriers() {
-    couriersBody.innerHTML = `<tr><td colspan="8" class="empty-state">Loading couriers…</td></tr>`;
+    couriersBody.innerHTML = `<tr><td colspan="9" class="empty-state">Loading couriers…</td></tr>`;
     const params = new URLSearchParams({ page: state.page, pageSize: state.pageSize });
     if (courierSearch.value.trim()) params.set("q", courierSearch.value.trim());
     if (courierStatusFilter.value) params.set("status", courierStatusFilter.value);
@@ -55,7 +55,7 @@
       renderCouriers(data.couriers || []);
       renderPagination();
     } catch (err) {
-      couriersBody.innerHTML = `<tr><td colspan="8" class="empty-state">${esc(err.message)}</td></tr>`;
+      couriersBody.innerHTML = `<tr><td colspan="9" class="empty-state">${esc(err.message)}</td></tr>`;
     }
   }
 
@@ -90,11 +90,15 @@
 
   function renderCouriers(couriers) {
     if (!couriers.length) {
-      couriersBody.innerHTML = `<tr><td colspan="8" class="empty-state">No couriers match — try a different search, or register one below.</td></tr>`;
+      couriersBody.innerHTML = `<tr><td colspan="9" class="empty-state">No couriers match — try a different search, or register one below.</td></tr>`;
       return;
     }
     couriersBody.innerHTML = couriers
       .map((c) => {
+        // Suspended is system-managed (cleared only by the courier topping
+        // up their own wallet, see server/routes/wallet.js) — the generic
+        // admin toggle can't be used to bypass that, so it's disabled here
+        // rather than offering an "Activate" button that would just 409.
         const nextStatus = c.status === "active" ? "inactive" : "active";
         const actionLabel = c.status === "active" ? "Deactivate" : "Activate";
         return `
@@ -108,8 +112,13 @@
             ${c.faydaIdPhotoUrl ? ` · <a href="${esc(c.faydaIdPhotoUrl)}" target="_blank" rel="noopener">ID</a>` : ""}
           </td>
           <td>${esc(c.tierCapability.join(", "))}</td>
+          <td>${Math.round(c.walletBalanceBirr).toLocaleString("en-US")} birr</td>
           <td><span class="status-badge status-${esc(c.status)}">${esc(c.status)}</span></td>
-          <td><button type="button" class="btn btn-ghost btn-sm" data-toggle-status="${c.id}" data-next-status="${nextStatus}">${actionLabel}</button></td>
+          <td>${
+            c.status === "suspended"
+              ? `<span class="form-note">Courier must top up</span>`
+              : `<button type="button" class="btn btn-ghost btn-sm" data-toggle-status="${c.id}" data-next-status="${nextStatus}">${actionLabel}</button>`
+          }</td>
         </tr>`;
       })
       .join("");

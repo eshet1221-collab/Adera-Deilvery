@@ -38,7 +38,9 @@
   let pendingOtpOrderId = null;
   let pendingProofOrderId = null;
   let pendingMatchOrderId = null;
+  let pendingMatchOrder = null;
   let matchSearchDebounce = null;
+  let ordersCache = [];
 
   const ordersState = { page: 1, pageSize: 25, totalPages: 1, total: 0 };
 
@@ -63,7 +65,7 @@
 
   /* ---------- orders: search + filter + pagination ---------- */
   async function loadOrders() {
-    ordersBody.innerHTML = `<tr><td colspan="8" class="empty-state">Loading orders…</td></tr>`;
+    ordersBody.innerHTML = `<tr><td colspan="9" class="empty-state">Loading orders…</td></tr>`;
     const params = new URLSearchParams({ page: ordersState.page, pageSize: ordersState.pageSize });
     if (orderSearch.value.trim()) params.set("q", orderSearch.value.trim());
     if (orderStatusFilter.value) params.set("status", orderStatusFilter.value);
@@ -77,7 +79,7 @@
       renderOrders(data.orders || []);
       renderPagination();
     } catch (err) {
-      ordersBody.innerHTML = `<tr><td colspan="8" class="empty-state">${esc(err.message)}</td></tr>`;
+      ordersBody.innerHTML = `<tr><td colspan="9" class="empty-state">${esc(err.message)}</td></tr>`;
     }
   }
 
@@ -147,9 +149,16 @@
     return `<a href="${esc(order.proofUrl)}" target="_blank" rel="noopener">View ✓</a>`;
   }
 
+  function paymentCell(order) {
+    if (order.paymentMethod === "cod") return `Cash on delivery`;
+    const label = { pending: "Awaiting payment", escrowed: "Escrowed", settled: "Settled" }[order.paymentStatus] || order.paymentStatus;
+    return `Prepaid · ${esc(label)}`;
+  }
+
   function renderOrders(orders) {
+    ordersCache = orders;
     if (!orders.length) {
-      ordersBody.innerHTML = `<tr><td colspan="8" class="empty-state">No orders match — try a different search, or book one from the <a href="order.html">Ship</a> page.</td></tr>`;
+      ordersBody.innerHTML = `<tr><td colspan="9" class="empty-state">No orders match — try a different search, or book one from the <a href="order.html">Ship</a> page.</td></tr>`;
       return;
     }
     ordersBody.innerHTML = orders
@@ -160,6 +169,7 @@
           <td>${esc(o.tier)}</td>
           <td class="wrap-cell">${esc(o.pickupAddress)} → ${esc(o.dropoffAddress)}</td>
           <td>${Math.round(o.priceBirr).toLocaleString("en-US")} birr</td>
+          <td>${paymentCell(o)}</td>
           <td><span class="status-badge status-${o.status}">${STATUS_LABELS[o.status] || o.status}</span></td>
           <td>${esc(o.courierName || "—")}</td>
           <td>${proofCell(o)}</td>
@@ -204,6 +214,7 @@
   /* ---------- match-a-courier dialog (search-as-you-type) ---------- */
   function openMatchDialog(orderId) {
     pendingMatchOrderId = orderId;
+    pendingMatchOrder = ordersCache.find((o) => o.id === orderId) || null;
     matchSearch.value = "";
     matchError.hidden = true;
     matchResults.innerHTML = `<p class="empty-state">Type to search couriers.</p>`;
@@ -230,19 +241,30 @@
     }
   }
 
+  // COD buffer check is a UX nicety only — the server (PATCH /:id/status)
+  // enforces the real 18%-of-price minimum-balance rule and rejects an
+  // underfunded match with a 409, surfaced via matchError below either way.
+  const COD_COMMISSION_RATE = 0.18;
+
   function renderMatchResults(couriers, total) {
     if (!couriers.length) {
       matchResults.innerHTML = `<p class="empty-state">No active couriers match — register one on the <a href="couriers.html">Couriers</a> page.</p>`;
       return;
     }
+    const isCod = pendingMatchOrder?.paymentMethod === "cod";
+    const requiredBuffer = isCod ? Math.round(pendingMatchOrder.priceBirr * COD_COMMISSION_RATE * 100) / 100 : 0;
+
     matchResults.innerHTML = couriers
-      .map(
-        (c) => `
-        <button type="button" class="match-result" data-courier-id="${c.id}">
+      .map((c) => {
+        const insufficient = isCod && c.walletBalanceBirr < requiredBuffer;
+        return `
+        <button type="button" class="match-result" data-courier-id="${c.id}" ${insufficient ? "disabled" : ""}>
           <strong>${esc(c.fullName)}</strong>
-          <span>${esc(c.phone)} · ${esc(c.tierCapability.join(", "))}</span>
-        </button>`
-      )
+          <span>${esc(c.phone)} · ${esc(c.tierCapability.join(", "))} · Wallet: ${Math.round(c.walletBalanceBirr).toLocaleString("en-US")} birr${
+            insufficient ? ` <span class="amount-negative">(needs ${requiredBuffer.toLocaleString("en-US")} birr for this COD order)</span>` : ""
+          }</span>
+        </button>`;
+      })
       .join("") + (total > couriers.length ? `<p class="match-more">+ ${total - couriers.length} more — keep typing to narrow it down</p>` : "");
   }
 

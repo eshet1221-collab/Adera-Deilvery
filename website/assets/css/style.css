@@ -349,6 +349,7 @@ button { font: inherit; }
 /* ---------- stat grid & charts ---------- */
 .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
 .stat-grid-4 { grid-template-columns: repeat(4, 1fr); margin-top: 22px; }
+.stat-grid-5 { grid-template-columns: repeat(5, 1fr); margin-top: 22px; }
 .stat-tile {
   background: var(--page-plane); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 22px;
 }
@@ -568,8 +569,15 @@ a.tracking-code:hover { text-decoration: underline; }
 .status-cancelled { background: color-mix(in srgb, #d03b3b 14%, transparent); color: #d03b3b; }
 .status-active { background: color-mix(in srgb, #0ca30c 16%, transparent); color: #0ca30c; }
 .status-inactive { background: color-mix(in srgb, #d03b3b 14%, transparent); color: #d03b3b; }
-:root[data-theme="dark"] .status-picked_up { color: #fab219; }
-@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .status-picked_up { color: #fab219; } }
+.status-suspended { background: color-mix(in srgb, #fab219 20%, transparent); color: #9a6b00; }
+:root[data-theme="dark"] .status-picked_up, :root[data-theme="dark"] .status-suspended { color: #fab219; }
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .status-picked_up,
+  :root:where(:not([data-theme="light"])) .status-suspended { color: #fab219; }
+}
+
+.amount-positive { color: #0ca30c; font-weight: 700; }
+.amount-negative { color: #d03b3b; font-weight: 700; }
 
 .status-timeline {
   display: flex; justify-content: space-between; gap: 8px; margin-top: 28px; position: relative;
@@ -680,6 +688,8 @@ a.tracking-code:hover { text-decoration: underline; }
   cursor: pointer; font: inherit;
 }
 .match-result:hover, .match-result:focus-visible { border-color: var(--brand); background: var(--brand-soft); }
+.match-result:disabled { cursor: not-allowed; opacity: .6; }
+.match-result:disabled:hover { border-color: var(--border); background: var(--surface-1); }
 .match-result strong { font-size: .9rem; font-weight: 700; }
 .match-result span { font-size: .78rem; color: var(--text-muted); }
 .match-more { font-size: .76rem; color: var(--text-muted); text-align: center; margin-top: 2px; }
@@ -707,7 +717,7 @@ a.tracking-code:hover { text-decoration: underline; }
   .tier-grid { grid-template-columns: 1fr 1fr; }
   .how-grid { grid-template-columns: 1fr; gap: 40px; }
   .flow { grid-template-columns: 1fr 1fr; }
-  .stat-grid, .stat-grid-4 { grid-template-columns: 1fr 1fr; }
+  .stat-grid, .stat-grid-4, .stat-grid-5 { grid-template-columns: 1fr 1fr; }
   .chart-grid { grid-template-columns: 1fr; }
   .metric-strip { grid-template-columns: 1fr 1fr; }
   .roadmap { grid-template-columns: 1fr 1fr; gap: 24px; }

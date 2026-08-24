@@ -77,6 +77,21 @@ function init() {
       created_at  TEXT NOT NULL DEFAULT (datetime('now'))
     );
 
+    -- Courier wallet ledger. amount_birr is signed (+credit / -debit);
+    -- balance_after_birr is a snapshot so history renders without
+    -- recomputing a running sum. type: 'topup' | 'delivery_payout' |
+    -- 'commission_debit'.
+    CREATE TABLE IF NOT EXISTS wallet_transactions (
+      id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+      courier_id         INTEGER NOT NULL REFERENCES couriers(id),
+      order_id           INTEGER REFERENCES orders(id),
+      type               TEXT NOT NULL,
+      amount_birr        REAL NOT NULL,
+      balance_after_birr REAL NOT NULL,
+      reference          TEXT,
+      created_at         TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
     CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
     CREATE INDEX IF NOT EXISTS idx_orders_tracking_code ON orders(tracking_code);
     CREATE INDEX IF NOT EXISTS idx_orders_tier ON orders(tier);
@@ -84,6 +99,8 @@ function init() {
     CREATE INDEX IF NOT EXISTS idx_couriers_status ON couriers(status);
     CREATE INDEX IF NOT EXISTS idx_couriers_phone ON couriers(phone);
     CREATE INDEX IF NOT EXISTS idx_sessions_courier ON sessions(courier_id);
+    CREATE INDEX IF NOT EXISTS idx_wallet_tx_courier ON wallet_transactions(courier_id);
+    CREATE INDEX IF NOT EXISTS idx_wallet_tx_order ON wallet_transactions(order_id);
   `);
 
   // Additive migration for databases created before these columns existed.
@@ -95,6 +112,27 @@ function init() {
   ensureColumn("couriers", "fayda_id_photo_path", "TEXT");
   ensureColumn("orders", "proof_file_path", "TEXT");
   ensureColumn("orders", "proof_submitted_at", "TEXT");
+  ensureColumn("couriers", "wallet_balance_birr", "REAL NOT NULL DEFAULT 0");
+  ensureColumn("orders", "payment_method", "TEXT NOT NULL DEFAULT 'prepaid'");
+  ensureColumn("orders", "payment_status", "TEXT NOT NULL DEFAULT 'pending'");
+  ensureColumn("orders", "payment_reference", "TEXT");
+  ensureColumn("orders", "commission_birr", "REAL");
+  ensureColumn("orders", "courier_payout_birr", "REAL");
+
+  // One-time, idempotent normalization for orders that predate the payment
+  // engine: they were delivered under the old (unstored, computed-on-the-fly)
+  // per-tier commission model, so this backfills them onto the new flat-18%
+  // ledger fields for consistency with computeStatsByCourier()'s running
+  // totals. Deliberately does NOT touch wallet_balance_birr or write
+  // wallet_transactions rows — that ledger starts fresh from here forward.
+  db.exec(`
+    UPDATE orders
+    SET payment_method = 'prepaid',
+        payment_status = 'settled',
+        commission_birr = ROUND(price_birr * 0.18, 2),
+        courier_payout_birr = ROUND(price_birr * 0.82, 2)
+    WHERE status = 'delivered' AND commission_birr IS NULL
+  `);
 
   setupSearch();
 }

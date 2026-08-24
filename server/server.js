@@ -8,6 +8,7 @@ const ordersRouter = require("./routes/orders");
 const couriersRouter = require("./routes/couriers");
 const { router: authRouter } = require("./routes/auth");
 const testimonialsRouter = require("./routes/testimonials");
+const walletRouter = require("./routes/wallet");
 
 init();
 
@@ -25,6 +26,7 @@ app.get("/api/tiers", (req, res) => {
 
 app.use("/api/orders", ordersRouter);
 app.use("/api/couriers", couriersRouter);
+app.use("/api/wallet", walletRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/testimonials", testimonialsRouter);
 

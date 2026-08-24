@@ -1,7 +1,6 @@
 const express = require("express");
 const { db } = require("../db");
 const { hashPassword } = require("../auth");
-const { earningsFor } = require("../config/tiers");
 const { requireAuth } = require("./auth");
 const { toFtsQuery, parsePagination } = require("../search");
 const { courierUpload } = require("../uploads");
@@ -30,6 +29,7 @@ function toCourierResponse(row) {
     faydaId: row.fayda_id,
     tierCapability: row.tier_capability.split(",").filter(Boolean),
     status: row.status,
+    walletBalanceBirr: row.wallet_balance_birr,
     photoUrl: row.photo_path ? `/uploads/${row.photo_path}` : null,
     faydaIdPhotoUrl: row.fayda_id_photo_path ? `/uploads/${row.fayda_id_photo_path}` : null,
     createdAt: row.created_at,
@@ -175,6 +175,15 @@ router.patch("/:id/status", (req, res) => {
   const existing = db.prepare("SELECT * FROM couriers WHERE id = ?").get(id);
   if (!existing) return res.status(404).json({ error: "Courier not found" });
 
+  // A suspended courier can only be cleared by topping up their wallet back
+  // to >= 0 (see POST /api/wallet/me/topup) — this generic toggle must not
+  // offer a bypass, even though "active" is otherwise a valid target status.
+  if (existing.status === "suspended") {
+    return res
+      .status(409)
+      .json({ error: "This courier is suspended for a negative wallet balance — they must top up to be reactivated, not an admin toggle" });
+  }
+
   db.prepare("UPDATE couriers SET status = ? WHERE id = ?").run(status, id);
   const row = db.prepare("SELECT * FROM couriers WHERE id = ?").get(id);
   res.json({ courier: toCourierResponse(row) });
@@ -183,7 +192,7 @@ router.patch("/:id/status", (req, res) => {
 function computeStatsByCourier() {
   const deliveredOrders = db
     .prepare(
-      `SELECT courier_id, tier, price_birr, updated_at FROM orders
+      `SELECT courier_id, price_birr, courier_payout_birr, updated_at FROM orders
        WHERE status = 'delivered' AND courier_id IS NOT NULL`
     )
     .all();
@@ -201,7 +210,11 @@ function computeStatsByCourier() {
     const entry = byCourier.get(order.courier_id);
     entry.deliveryCount += 1;
     entry.totalAmountBirr += order.price_birr;
-    entry.totalEarningsBirr += earningsFor(order.tier, order.price_birr) || 0;
+    // courier_payout_birr is set at settlement time (see PATCH
+    // /api/orders/:id/status) — for COD this is cash the courier already
+    // physically holds (price minus commission), not a wallet credit; for
+    // prepaid it's exactly what was credited to their wallet.
+    entry.totalEarningsBirr += order.courier_payout_birr || 0;
     if (!entry.lastDeliveryAt || order.updated_at > entry.lastDeliveryAt) {
       entry.lastDeliveryAt = order.updated_at;
     }
@@ -225,7 +238,7 @@ router.get("/stats", (req, res) => {
 
   // Include every registered courier, even ones with zero deliveries yet,
   // so the leaderboard reflects the whole roster, not just the active ones.
-  const allCouriers = db.prepare("SELECT id, full_name, phone, status FROM couriers").all();
+  const allCouriers = db.prepare("SELECT id, full_name, phone, status, wallet_balance_birr FROM couriers").all();
   const stats = allCouriers.map((c) => {
     const entry = byCourier.get(c.id) || {
       deliveryCount: 0,
@@ -238,6 +251,7 @@ router.get("/stats", (req, res) => {
       fullName: c.full_name,
       phone: c.phone,
       status: c.status,
+      walletBalanceBirr: c.wallet_balance_birr,
       deliveryCount: entry.deliveryCount,
       totalAmountBirr: Math.round(entry.totalAmountBirr * 100) / 100,
       totalEarningsBirr: Math.round(entry.totalEarningsBirr * 100) / 100,
@@ -273,6 +287,8 @@ router.get("/me/stats", requireAuth, (req, res) => {
     stats: {
       courierId: req.courier.id,
       fullName: req.courier.full_name,
+      status: req.courier.status,
+      walletBalanceBirr: req.courier.wallet_balance_birr,
       deliveryCount: entry.deliveryCount,
       totalAmountBirr: Math.round(entry.totalAmountBirr * 100) / 100,
       totalEarningsBirr: Math.round(entry.totalEarningsBirr * 100) / 100,

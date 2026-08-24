@@ -15,8 +15,17 @@
   const bookingSection = document.getElementById("bookingSection");
   const confirmSection = document.getElementById("confirmSection");
 
+  const payNowPanel = document.getElementById("payNowPanel");
+  const codNote = document.getElementById("codNote");
+  const payAmount = document.getElementById("payAmount");
+  const payReference = document.getElementById("payReference");
+  const payError = document.getElementById("payError");
+  const paySubmit = document.getElementById("paySubmit");
+  const payConfirmed = document.getElementById("payConfirmed");
+
   let tiers = [];
   let tiersByKey = {};
+  let currentOrderId = null;
 
   function showError(message) {
     errorEl.textContent = message;
@@ -104,6 +113,8 @@
       return;
     }
 
+    const paymentMethod = form.querySelector('input[name="paymentMethod"]:checked')?.value || "prepaid";
+
     const payload = {
       tier: tierKey,
       distanceKm: Number(distanceRange.value),
@@ -114,6 +125,7 @@
       recipientPhone: document.getElementById("recipientPhone").value.trim(),
       pickupAddress: document.getElementById("pickupAddress").value.trim(),
       dropoffAddress: document.getElementById("dropoffAddress").value.trim(),
+      paymentMethod,
     };
 
     submitBtn.disabled = true;
@@ -138,6 +150,7 @@
   });
 
   function showConfirmation(order) {
+    currentOrderId = order.id;
     document.getElementById("confTrackingCode").textContent = order.trackingCode;
     const confOtp = document.getElementById("confOtp");
     if (order.otpCode) {
@@ -157,10 +170,57 @@
     document.getElementById("confDropoff").textContent = order.dropoffAddress;
     document.getElementById("confTrackLink").href = `track.html?code=${encodeURIComponent(order.trackingCode)}`;
 
+    payReference.value = "";
+    payError.textContent = "";
+    payError.hidden = true;
+    payConfirmed.hidden = true;
+    paySubmit.hidden = false;
+    payReference.hidden = false;
+    if (order.paymentMethod === "prepaid") {
+      payAmount.textContent = Math.round(order.priceBirr).toLocaleString("en-US");
+      payNowPanel.hidden = false;
+      codNote.hidden = true;
+    } else {
+      payNowPanel.hidden = true;
+      codNote.hidden = false;
+    }
+
     bookingSection.hidden = true;
     confirmSection.hidden = false;
     confirmSection.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  paySubmit.addEventListener("click", async () => {
+    const reference = payReference.value.trim();
+    payError.hidden = true;
+    if (!reference) {
+      payError.textContent = "Enter the transaction reference from your payment.";
+      payError.hidden = false;
+      return;
+    }
+
+    paySubmit.disabled = true;
+    paySubmit.textContent = "Submitting…";
+    try {
+      const res = await fetch(`/api/orders/${currentOrderId}/payment-reference`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paymentReference: reference }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not confirm payment");
+
+      paySubmit.hidden = true;
+      payReference.hidden = true;
+      payConfirmed.hidden = false;
+    } catch (err) {
+      payError.textContent = err.message || "Something went wrong. Please try again.";
+      payError.hidden = false;
+    } finally {
+      paySubmit.disabled = false;
+      paySubmit.textContent = "I've paid — submit reference";
+    }
+  });
 
   document.getElementById("confNewOrder").addEventListener("click", () => {
     form.reset();

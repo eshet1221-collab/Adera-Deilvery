@@ -11,7 +11,9 @@
   const statDeliveries = document.getElementById("statDeliveries");
   const statAmount = document.getElementById("statAmount");
   const statEarnings = document.getElementById("statEarnings");
+  const statWallet = document.getElementById("statWallet");
   const statLast = document.getElementById("statLast");
+  const suspendedBanner = document.getElementById("suspendedBanner");
   const logoutBtn = document.getElementById("logoutBtn");
 
   async function authedFetch(url, options = {}) {
@@ -51,7 +53,9 @@
     statDeliveries.textContent = s.deliveryCount;
     statAmount.textContent = `${Math.round(s.totalAmountBirr).toLocaleString("en-US")} birr`;
     statEarnings.textContent = `${Math.round(s.totalEarningsBirr).toLocaleString("en-US")} birr`;
+    statWallet.textContent = `${Math.round(s.walletBalanceBirr).toLocaleString("en-US")} birr`;
     statLast.textContent = s.lastDeliveryAt ? new Date(s.lastDeliveryAt.replace(" ", "T") + "Z").toLocaleDateString() : "—";
+    suspendedBanner.hidden = s.status !== "suspended";
   }
 
   logoutBtn.addEventListener("click", async () => {

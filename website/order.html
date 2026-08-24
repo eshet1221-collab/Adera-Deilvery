@@ -132,6 +132,24 @@
           </div>
         </div>
 
+        <div class="form-section">
+          <h2 class="form-section-title">5. Payment</h2>
+          <fieldset class="tier-select" id="paymentMethodSelect">
+            <legend class="visually-hidden">Payment method</legend>
+            <div class="tier-options">
+              <label class="tier-pill" data-payment="prepaid">
+                <input type="radio" name="paymentMethod" value="prepaid" checked>
+                <span>Pay now (escrow)</span>
+              </label>
+              <label class="tier-pill" data-payment="cod">
+                <input type="radio" name="paymentMethod" value="cod">
+                <span>Cash/digital on delivery</span>
+              </label>
+            </div>
+          </fieldset>
+          <p class="form-note">Pay now: the fee is held in escrow and released to the courier once the recipient confirms delivery. Cash on delivery: the recipient pays the courier directly when the item arrives.</p>
+        </div>
+
         <p class="form-error" id="orderError" role="alert" hidden></p>
         <button type="submit" class="btn btn-primary btn-block" id="orderSubmit">Confirm &amp; get price</button>
         <p class="form-note">Prototype only — this creates a real row in the SQLite database via <code>POST /api/orders</code>, but nothing is actually dispatched.</p>
@@ -163,6 +181,22 @@
           <div><dt>From</dt><dd id="confPickup"></dd></div>
           <div><dt>To</dt><dd id="confDropoff"></dd></div>
         </dl>
+
+        <!-- Prepaid orders only: pay externally, then submit the transaction
+             reference to move the order out of escrow-pending. -->
+        <div class="form-card" id="payNowPanel" hidden style="margin-top: 24px;">
+          <h3 class="form-section-title">Pay now</h3>
+          <p class="form-note">Pay <strong id="payAmount"></strong> birr via Telebirr, CBE Birr, or Chapa to the Adera Delivery merchant account, then enter the transaction reference below. A courier won't be matched until this is confirmed.</p>
+          <div class="form-row">
+            <label for="payReference">Transaction reference</label>
+            <input type="text" id="payReference" placeholder="e.g. Telebirr transaction ID" required>
+          </div>
+          <p class="form-error" id="payError" role="alert" hidden></p>
+          <button class="btn btn-primary" type="button" id="paySubmit">I've paid — submit reference</button>
+          <p class="form-note" id="payConfirmed" hidden>Payment confirmed — this order is now escrowed and ready to be matched with a courier.</p>
+        </div>
+        <p class="form-note" id="codNote" hidden>Cash/digital on delivery — pay the courier directly when your item arrives.</p>
+
         <div class="hero-actions">
           <a class="btn btn-primary" id="confTrackLink" href="track.html">Track this order</a>
           <button class="btn btn-ghost" type="button" id="confNewOrder">Book another</button>
