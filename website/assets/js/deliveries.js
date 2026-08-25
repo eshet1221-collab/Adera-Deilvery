@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const token = localStorage.getItem("adera-token");
+  const token = localStorage.getItem("loyal-token");
   if (!token) {
     window.location.href = "login.html";
     return;
@@ -43,8 +43,8 @@
       headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` },
     });
     if (res.status === 401) {
-      localStorage.removeItem("adera-token");
-      localStorage.removeItem("adera-courier-name");
+      localStorage.removeItem("loyal-token");
+      localStorage.removeItem("loyal-courier-name");
       window.location.href = "login.html";
       throw new Error("Session expired");
     }
@@ -59,12 +59,12 @@
   }
 
   async function loadDeliveries() {
-    deliveriesBody.innerHTML = `<tr><td colspan="7" class="empty-state">Loading…</td></tr>`;
+    deliveriesBody.innerHTML = `<tr><td colspan="8" class="empty-state">Loading…</td></tr>`;
     try {
       const data = await authedFetch("/api/orders/mine");
       renderDeliveries(data.orders || []);
     } catch (err) {
-      deliveriesBody.innerHTML = `<tr><td colspan="7" class="empty-state">${esc(err.message)}</td></tr>`;
+      deliveriesBody.innerHTML = `<tr><td colspan="8" class="empty-state">${esc(err.message)}</td></tr>`;
     }
   }
 
@@ -76,18 +76,19 @@
             <button class="btn btn-primary btn-sm" data-action="pickup" data-id="${order.id}">Mark picked up</button>
           </div>
           <button class="link-btn" data-action="cancel" data-id="${order.id}">cancel</button>`;
-      case "picked_up":
-        return order.proofSubmitted
-          ? `
-          <div class="row-actions">
-            <button class="btn btn-primary btn-sm" data-action="deliver" data-id="${order.id}">Confirm delivery</button>
-          </div>
-          <button class="link-btn" data-action="cancel" data-id="${order.id}">cancel</button>`
-          : `
-          <div class="row-actions">
-            <button class="btn btn-primary btn-sm" data-action="proof" data-id="${order.id}">Upload proof</button>
-          </div>
+      case "picked_up": {
+        let primary;
+        if (!order.proofSubmitted) {
+          primary = `<button class="btn btn-primary btn-sm" data-action="proof" data-id="${order.id}">Upload proof</button>`;
+        } else if (order.paymentMethod === "cod" && !order.cashConfirmedAt) {
+          primary = `<button class="btn btn-primary btn-sm" data-action="confirm-cash" data-id="${order.id}">Confirm cash received</button>`;
+        } else {
+          primary = `<button class="btn btn-primary btn-sm" data-action="deliver" data-id="${order.id}">Confirm delivery</button>`;
+        }
+        return `
+          <div class="row-actions">${primary}</div>
           <button class="link-btn" data-action="cancel" data-id="${order.id}">cancel</button>`;
+      }
       default:
         return "—";
     }
@@ -98,9 +99,14 @@
     return `<a href="${esc(order.proofUrl)}" target="_blank" rel="noopener">View ✓</a>`;
   }
 
+  function cashCell(order) {
+    if (order.paymentMethod !== "cod") return "—";
+    return order.cashConfirmedAt ? "Confirmed ✓" : "Not yet";
+  }
+
   function renderDeliveries(orders) {
     if (!orders.length) {
-      deliveriesBody.innerHTML = `<tr><td colspan="7" class="empty-state">Nothing assigned to you yet — check back once the call center or admin matches you to an order.</td></tr>`;
+      deliveriesBody.innerHTML = `<tr><td colspan="8" class="empty-state">Nothing assigned to you yet — check back once the call center or admin matches you to an order.</td></tr>`;
       return;
     }
     deliveriesBody.innerHTML = orders
@@ -115,6 +121,7 @@
           }</td>
           <td><span class="status-badge status-${o.status}">${STATUS_LABELS[o.status] || o.status}</span></td>
           <td>${proofCell(o)}</td>
+          <td>${cashCell(o)}</td>
           <td>${actionCell(o)}</td>
         </tr>`
       )
@@ -135,6 +142,15 @@
       openOtpDialog(id);
     } else if (action === "proof") {
       openProofDialog(id);
+    } else if (action === "confirm-cash") {
+      if (confirm("Confirm you've received the cash/digital payment from the recipient?")) {
+        try {
+          await authedFetch(`/api/orders/${id}/confirm-cash`, { method: "POST" });
+          await loadDeliveries();
+        } catch (err) {
+          alert(err.message);
+        }
+      }
     }
   });
 
@@ -221,8 +237,8 @@
     } catch (err) {
       // already redirected on 401; otherwise just proceed to clear locally
     }
-    localStorage.removeItem("adera-token");
-    localStorage.removeItem("adera-courier-name");
+    localStorage.removeItem("loyal-token");
+    localStorage.removeItem("loyal-courier-name");
     window.location.href = "login.html";
   });
 

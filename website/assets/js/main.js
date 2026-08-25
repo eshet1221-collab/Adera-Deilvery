@@ -4,7 +4,7 @@
   /* ---------- theme toggle ---------- */
   const root = document.documentElement;
   const themeToggle = document.getElementById("themeToggle");
-  const THEME_KEY = "adera-theme";
+  const THEME_KEY = "loyal-theme";
 
   function applyTheme(theme) {
     if (theme === "light" || theme === "dark") {
@@ -139,9 +139,9 @@
       const role = document.getElementById("fRole").value;
       const message = document.getElementById("fMsg").value.trim();
 
-      const subject = encodeURIComponent(`Adera Delivery inquiry from ${name} (${role})`);
+      const subject = encodeURIComponent(`Loyal Delivery Movers inquiry from ${name} (${role})`);
       const body = encodeURIComponent(`${message}\n\n—\n${name}\n${email}\n${role}`);
-      window.location.href = `mailto:hello@aderadelivery.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:hello@loyaldeliverymovers.com?subject=${subject}&body=${body}`;
     });
   }
 

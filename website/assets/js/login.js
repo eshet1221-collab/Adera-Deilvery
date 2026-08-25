@@ -5,7 +5,7 @@
   const errorEl = document.getElementById("loginError");
 
   // Already logged in? Skip straight to the dashboard.
-  if (localStorage.getItem("adera-token")) {
+  if (localStorage.getItem("loyal-token")) {
     window.location.href = "dashboard.html";
     return;
   }
@@ -26,11 +26,11 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
 
-      localStorage.setItem("adera-token", data.token);
-      localStorage.setItem("adera-courier-name", data.courier.fullName);
+      localStorage.setItem("loyal-token", data.token);
+      localStorage.setItem("loyal-courier-name", data.courier.fullName);
       window.location.href = "dashboard.html";
     } catch (err) {
-      errorEl.textContent = err.message || "Couldn't reach the Adera Delivery API — is the server running?";
+      errorEl.textContent = err.message || "Couldn't reach the Loyal Delivery Movers API — is the server running?";
       errorEl.hidden = false;
     }
   });

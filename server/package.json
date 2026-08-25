@@ -1,8 +1,8 @@
 {
-  "name": "adera-delivery-server",
+  "name": "loyal-delivery-movers-server",
   "version": "0.1.0",
   "private": true,
-  "description": "Prototype API + database for Adera Delivery — order creation, tier pricing, and a basic courier/order workflow.",
+  "description": "Prototype API + database for Loyal Delivery Movers — order creation, tier pricing, and a basic courier/order workflow.",
   "main": "server.js",
   "scripts": {
     "start": "node --env-file-if-exists=.env server.js",

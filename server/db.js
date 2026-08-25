@@ -5,7 +5,7 @@ const { DatabaseSync } = require("node:sqlite");
 const dataDir = path.join(__dirname, "data");
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 
-const dbPath = process.env.DATABASE_PATH || path.join(dataDir, "adera-delivery.db");
+const dbPath = process.env.DATABASE_PATH || path.join(dataDir, "loyal-delivery-movers.db");
 // node:sqlite (built into Node 22.5+) — no native compilation, unlike
 // better-sqlite3, which needs a matching prebuilt binary or a full C++/Python
 // toolchain to build from source.
@@ -118,6 +118,7 @@ function init() {
   ensureColumn("orders", "payment_reference", "TEXT");
   ensureColumn("orders", "commission_birr", "REAL");
   ensureColumn("orders", "courier_payout_birr", "REAL");
+  ensureColumn("orders", "cash_confirmed_at", "TEXT");
 
   // One-time, idempotent normalization for orders that predate the payment
   // engine: they were delivered under the old (unstored, computed-on-the-fly)

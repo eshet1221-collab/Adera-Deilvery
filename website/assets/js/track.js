@@ -62,7 +62,7 @@
       if (!res.ok) throw new Error(data.error || "Order not found");
       renderOrder(data.order);
     } catch (err) {
-      showError(err.message || "Couldn't reach the Adera Delivery API — is the server running?");
+      showError(err.message || "Couldn't reach the Loyal Delivery Movers API — is the server running?");
     }
   }
 

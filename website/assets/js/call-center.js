@@ -99,7 +99,7 @@
       updatePreview();
     } catch (err) {
       showError(
-        "Couldn't reach the Adera Delivery API. Is the server running? (This page needs `npm start` in /server — it won't work opened as a plain file.)"
+        "Couldn't reach the Loyal Delivery Movers API. Is the server running? (This page needs `npm start` in /server — it won't work opened as a plain file.)"
       );
     }
   }

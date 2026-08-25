@@ -1,6 +1,6 @@
-# Adera Delivery — Marketing Website + Booking Prototype
+# Loyal Delivery Movers — Marketing Website + Booking Prototype
 
-A marketing/pitch site for **Adera Delivery** (a Crowdsourced Urban
+A marketing/pitch site for **Loyal Delivery Movers** (a Crowdsourced Urban
 Logistics Platform for Addis Ababa), built directly from the project's full
 business proposal — plus a small working booking/tracking/admin flow backed
 by a real database (see `../server`).
@@ -102,7 +102,7 @@ folder itself, API included) — see `../server/README.md`.
    cd website
    git init
    git add .
-   git commit -m "Adera Delivery marketing site"
+   git commit -m "Loyal Delivery Movers marketing site"
    git branch -M main
    git remote add origin https://github.com/<your-username>/<your-repo>.git
    git push -u origin main

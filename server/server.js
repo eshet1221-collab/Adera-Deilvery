@@ -58,5 +58,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Adera Delivery server listening on http://localhost:${PORT}`);
+  console.log(`Loyal Delivery Movers server listening on http://localhost:${PORT}`);
 });

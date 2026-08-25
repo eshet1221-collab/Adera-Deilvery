@@ -58,6 +58,7 @@ function toOrderResponse(row, { includeOtp = false } = {}) {
     paymentReference: row.payment_reference,
     commissionBirr: row.commission_birr,
     courierPayoutBirr: row.courier_payout_birr,
+    cashConfirmedAt: row.cash_confirmed_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     ...(includeOtp ? { otpCode: row.otp_code } : {}),
@@ -279,6 +280,35 @@ router.post("/:id/proof", optionalAuth, (req, res) => {
   });
 });
 
+// POST /api/orders/:id/confirm-cash — the courier explicitly confirms
+// they've collected the cash/digital payment from the recipient on a COD
+// order. Required (like proof) before the delivered transition is allowed —
+// see the "delivered" branch of PATCH /:id/status below — so a courier can't
+// mark a COD order delivered, and trigger their own commission debit,
+// without acknowledging they were actually paid. Not applicable to prepaid
+// orders (the sender already paid into escrow before matching).
+router.post("/:id/confirm-cash", optionalAuth, (req, res) => {
+  const id = Number(req.params.id);
+  const row = db.prepare("SELECT * FROM orders WHERE id = ?").get(id);
+  if (!row) return res.status(404).json({ error: "Order not found" });
+  if (!assertOwnership(req, res, row)) return;
+
+  if (row.payment_method !== "cod") {
+    return res.status(409).json({ error: "Only Cash-on-Delivery orders need a cash confirmation" });
+  }
+  if (row.status !== "picked_up") {
+    return res
+      .status(409)
+      .json({ error: `Cash can only be confirmed while an order is "picked_up" (currently "${row.status}")` });
+  }
+
+  db.prepare(
+    `UPDATE orders SET cash_confirmed_at = datetime('now'), updated_at = datetime('now') WHERE id = ?`
+  ).run(id);
+
+  res.json({ order: toOrderResponse(fetchOrderWithCourier(id)) });
+});
+
 // POST /api/orders/:id/payment-reference — sender submits the external
 // payment reference (Telebirr/CBE/Chapa transaction ID) after paying for a
 // prepaid order outside the app — no live payment-gateway integration exists
@@ -366,6 +396,11 @@ router.patch("/:id/status", optionalAuth, (req, res) => {
   if (status === "delivered") {
     if (!row.proof_file_path) {
       return res.status(400).json({ error: "Photo/video proof must be submitted before confirming delivery" });
+    }
+    if (row.payment_method === "cod" && !row.cash_confirmed_at) {
+      return res
+        .status(400)
+        .json({ error: "The courier must confirm cash received before delivery can be confirmed" });
     }
     if (!otp || String(otp).trim() !== String(row.otp_code)) {
       return res.status(400).json({ error: "Incorrect OTP — delivery cannot be confirmed" });

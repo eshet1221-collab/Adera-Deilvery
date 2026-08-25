@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const token = localStorage.getItem("adera-token");
+  const token = localStorage.getItem("loyal-token");
   if (!token) {
     window.location.href = "login.html";
     return;
@@ -22,8 +22,8 @@
       headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` },
     });
     if (res.status === 401) {
-      localStorage.removeItem("adera-token");
-      localStorage.removeItem("adera-courier-name");
+      localStorage.removeItem("loyal-token");
+      localStorage.removeItem("loyal-courier-name");
       window.location.href = "login.html";
       throw new Error("Session expired");
     }
@@ -64,8 +64,8 @@
     } catch (err) {
       // already redirected on 401; otherwise just proceed to clear locally
     }
-    localStorage.removeItem("adera-token");
-    localStorage.removeItem("adera-courier-name");
+    localStorage.removeItem("loyal-token");
+    localStorage.removeItem("loyal-courier-name");
     window.location.href = "login.html";
   });
 

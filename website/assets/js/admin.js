@@ -65,7 +65,7 @@
 
   /* ---------- orders: search + filter + pagination ---------- */
   async function loadOrders() {
-    ordersBody.innerHTML = `<tr><td colspan="9" class="empty-state">Loading orders…</td></tr>`;
+    ordersBody.innerHTML = `<tr><td colspan="10" class="empty-state">Loading orders…</td></tr>`;
     const params = new URLSearchParams({ page: ordersState.page, pageSize: ordersState.pageSize });
     if (orderSearch.value.trim()) params.set("q", orderSearch.value.trim());
     if (orderStatusFilter.value) params.set("status", orderStatusFilter.value);
@@ -79,7 +79,7 @@
       renderOrders(data.orders || []);
       renderPagination();
     } catch (err) {
-      ordersBody.innerHTML = `<tr><td colspan="9" class="empty-state">${esc(err.message)}</td></tr>`;
+      ordersBody.innerHTML = `<tr><td colspan="10" class="empty-state">${esc(err.message)}</td></tr>`;
     }
   }
 
@@ -127,18 +127,19 @@
             <button class="btn btn-primary btn-sm" data-action="pickup" data-id="${order.id}">Mark picked up</button>
           </div>
           <button class="link-btn" data-action="cancel" data-id="${order.id}">cancel</button>`;
-      case "picked_up":
-        return order.proofSubmitted
-          ? `
-          <div class="row-actions">
-            <button class="btn btn-primary btn-sm" data-action="deliver" data-id="${order.id}">Confirm delivery</button>
-          </div>
-          <button class="link-btn" data-action="cancel" data-id="${order.id}">cancel</button>`
-          : `
-          <div class="row-actions">
-            <button class="btn btn-primary btn-sm" data-action="proof" data-id="${order.id}">Upload proof</button>
-          </div>
+      case "picked_up": {
+        let primary;
+        if (!order.proofSubmitted) {
+          primary = `<button class="btn btn-primary btn-sm" data-action="proof" data-id="${order.id}">Upload proof</button>`;
+        } else if (order.paymentMethod === "cod" && !order.cashConfirmedAt) {
+          primary = `<button class="btn btn-primary btn-sm" data-action="confirm-cash" data-id="${order.id}">Confirm cash received</button>`;
+        } else {
+          primary = `<button class="btn btn-primary btn-sm" data-action="deliver" data-id="${order.id}">Confirm delivery</button>`;
+        }
+        return `
+          <div class="row-actions">${primary}</div>
           <button class="link-btn" data-action="cancel" data-id="${order.id}">cancel</button>`;
+      }
       default:
         return "—";
     }
@@ -147,6 +148,11 @@
   function proofCell(order) {
     if (!order.proofSubmitted) return order.status === "delivered" ? "—" : "Not yet";
     return `<a href="${esc(order.proofUrl)}" target="_blank" rel="noopener">View ✓</a>`;
+  }
+
+  function cashCell(order) {
+    if (order.paymentMethod !== "cod") return "—";
+    return order.cashConfirmedAt ? "Confirmed ✓" : "Not yet";
   }
 
   function paymentCell(order) {
@@ -158,7 +164,7 @@
   function renderOrders(orders) {
     ordersCache = orders;
     if (!orders.length) {
-      ordersBody.innerHTML = `<tr><td colspan="9" class="empty-state">No orders match — try a different search, or book one from the <a href="order.html">Ship</a> page.</td></tr>`;
+      ordersBody.innerHTML = `<tr><td colspan="10" class="empty-state">No orders match — try a different search, or book one from the <a href="order.html">Ship</a> page.</td></tr>`;
       return;
     }
     ordersBody.innerHTML = orders
@@ -173,6 +179,7 @@
           <td><span class="status-badge status-${o.status}">${STATUS_LABELS[o.status] || o.status}</span></td>
           <td>${esc(o.courierName || "—")}</td>
           <td>${proofCell(o)}</td>
+          <td>${cashCell(o)}</td>
           <td>${actionCell(o)}</td>
         </tr>`
       )
@@ -195,6 +202,15 @@
       openOtpDialog(id);
     } else if (action === "proof") {
       openProofDialog(id);
+    } else if (action === "confirm-cash") {
+      if (confirm("Confirm the courier has received the cash/digital payment from the recipient?")) {
+        try {
+          await fetchJson(`/api/orders/${id}/confirm-cash`, { method: "POST" });
+          await loadOrders();
+        } catch (err) {
+          alert(err.message);
+        }
+      }
     }
   });
 

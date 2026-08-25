@@ -1,4 +1,4 @@
-# Adera Delivery — Prototype API + Database
+# Loyal Delivery Movers — Prototype API + Database
 
 A small Express + SQLite backend that gives the marketing site real order
 creation, tracking, and a courier/order workflow — backed by an actual
@@ -174,7 +174,7 @@ before (served from `../website`), plus:
   /api/orders/:id/status`) without leaving the page — no new endpoints,
   just the existing order/courier APIs used together in one flow
 
-The database file is created automatically at `server/data/adera-delivery.db`
+The database file is created automatically at `server/data/loyal-delivery-movers.db`
 on first run (SQLite, via Node's built-in `node:sqlite`) — nothing extra to
 install or configure. Open it with DB Browser for SQLite, the VS Code SQLite
 Viewer extension, or any SQLite client, once you've created some data.
@@ -264,6 +264,6 @@ server/
 │   └── testimonials.js   Public GET/POST for sender/receiver/courier reviews
 ├── .env.example          Template for SMS_API_URL/SMS_API_KEY/SMS_SENDER_ID — copy to .env (gitignored)
 └── data/
-    ├── adera-delivery.db  SQLite file, created at runtime (gitignored)
+    ├── loyal-delivery-movers.db  SQLite file, created at runtime (gitignored)
     └── uploads/              Proof photos/videos, created at runtime (gitignored)
 ```

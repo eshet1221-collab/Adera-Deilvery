@@ -2,7 +2,7 @@
 const TRACKING_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 function generateTrackingCode() {
-  let code = "AD-";
+  let code = "LDM-";
   for (let i = 0; i < 6; i++) {
     code += TRACKING_CHARS[Math.floor(Math.random() * TRACKING_CHARS.length)];
   }

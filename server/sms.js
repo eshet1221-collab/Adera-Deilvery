@@ -19,7 +19,7 @@
 // code stops being handed back over the API.
 const SMS_API_URL = process.env.SMS_API_URL || "";
 const SMS_API_KEY = process.env.SMS_API_KEY || "";
-const SMS_SENDER_ID = process.env.SMS_SENDER_ID || "AderaDelivery";
+const SMS_SENDER_ID = process.env.SMS_SENDER_ID || "LoyalDeliveryMovers";
 
 function isConfigured() {
   return Boolean(SMS_API_URL && SMS_API_KEY);
@@ -46,7 +46,7 @@ async function sendOtpSms(phone, otp) {
   }
 
   const to = toE164Ethiopia(phone);
-  const message = `Adera Delivery: your delivery confirmation code is ${otp}. Share this only with your courier at handoff.`;
+  const message = `Loyal Delivery Movers: your delivery confirmation code is ${otp}. Share this only with your courier at handoff.`;
 
   try {
     const res = await fetch(SMS_API_URL, {
