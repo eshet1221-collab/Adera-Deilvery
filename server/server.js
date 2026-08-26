@@ -7,6 +7,7 @@ const { uploadsDir } = require("./uploads");
 const ordersRouter = require("./routes/orders");
 const couriersRouter = require("./routes/couriers");
 const { router: authRouter } = require("./routes/auth");
+const { router: adminAuthRouter } = require("./routes/adminAuth");
 const testimonialsRouter = require("./routes/testimonials");
 const walletRouter = require("./routes/wallet");
 
@@ -28,11 +29,13 @@ app.use("/api/orders", ordersRouter);
 app.use("/api/couriers", couriersRouter);
 app.use("/api/wallet", walletRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/admin/auth", adminAuthRouter);
 app.use("/api/testimonials", testimonialsRouter);
 
-// Uploaded delivery-proof photos/videos. Unauthenticated, same as the rest
-// of this prototype's admin surface — filenames are hard to guess (order id
-// + timestamp) but this is not real access control. Don't ship as-is.
+// Uploaded delivery-proof photos/videos. Unauthenticated — filenames are
+// hard to guess (order id + timestamp) but this is not real access control.
+// The admin/courier pages that reference these URLs are now behind login;
+// the files themselves aren't (fine for a prototype, worth revisiting).
 app.use("/uploads", express.static(uploadsDir));
 
 app.use((req, res, next) => {

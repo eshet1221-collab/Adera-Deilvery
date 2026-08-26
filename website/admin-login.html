@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Couriers — Loyal Delivery Movers</title>
-<meta name="description" content="Loyal Delivery Movers internal prototype — register and review couriers.">
+<title>Admin Login — Loyal Delivery Movers</title>
+<meta name="description" content="Log in as an admin to manage Loyal Delivery Movers orders, couriers, and earnings.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b6e4f'/%3E%3Cpath d='M50 22 L77 37 L77 67 L50 82 L23 67 L23 37 Z' fill='none' stroke='%23fcfcfb' stroke-width='6.5' stroke-linejoin='round'/%3E%3Cpath d='M23 37 L50 52 L77 37 M50 52 L50 82' stroke='%23fcfcfb' stroke-width='6.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M39 51 L47 59 L64 40' stroke='%23fcfcfb' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='64' cy='40' r='4.5' fill='%23fcfcfb'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -55,7 +55,7 @@
         </button>
         <div class="nav-dropdown-menu">
       <a href="admin.html">Orders</a>
-      <a href="couriers.html" class="is-active">Couriers</a>
+      <a href="couriers.html">Couriers</a>
       <a href="call-center.html">Call Center</a>
       <a href="earnings.html">Earnings</a>
         </div>
@@ -77,118 +77,31 @@
 
 <main id="main">
   <section class="section page-hero">
-    <div class="wrap dash-head">
-      <div>
-        <p class="kicker">Internal · prototype</p>
-        <h1 class="page-title">Couriers</h1>
-        <p class="section-lede">Anyone can register as a courier below. Viewing or managing the roster — the same search index that backs the "Match a courier" dialog on the <a href="admin.html">Orders</a> page — requires an admin login.</p>
-      </div>
-      <button class="btn btn-ghost btn-sm" id="adminLogout" type="button" hidden>Log out</button>
+    <div class="wrap">
+      <p class="kicker">Internal · admin</p>
+      <h1 class="page-title">Admin login</h1>
+      <p class="section-lede">Log in to manage orders, couriers, call-center bookings, and earnings.</p>
     </div>
   </section>
 
   <section class="section section-tint">
-    <div class="wrap admin-couriers-wrap">
-      <div class="admin-head">
-        <h2>Registered couriers</h2>
-        <div class="admin-head-actions">
-          <button class="btn btn-ghost btn-sm" id="refreshCouriers" type="button">Refresh</button>
-          <button class="btn btn-primary btn-sm" id="openRegisterDialog" type="button">+ Register a courier</button>
+    <div class="wrap">
+      <form class="form-card login-card" id="adminLoginForm">
+        <div class="form-row">
+          <label for="adminLoginUsername">Username</label>
+          <input type="text" id="adminLoginUsername" required autocomplete="username">
         </div>
-      </div>
-
-      <div class="search-bar">
-        <input type="search" id="courierSearch" placeholder="Search name, phone, Fayda ID…" aria-label="Search couriers">
-        <select id="courierStatusFilter" aria-label="Filter by status">
-          <option value="">All statuses</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-          <option value="suspended">Suspended</option>
-        </select>
-      </div>
-
-      <div class="table-scroll">
-        <table class="pricing-table admin-table">
-          <thead>
-            <tr><th scope="col">Name</th><th scope="col">Phone</th><th scope="col">Email</th><th scope="col">Fayda ID</th><th scope="col">Docs</th><th scope="col">Tiers</th><th scope="col">Wallet</th><th scope="col">Status</th><th scope="col">Action</th></tr>
-          </thead>
-          <tbody id="couriersBody">
-            <tr><td colspan="9" class="empty-state">Loading couriers…</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="pagination" id="couriersPagination">
-        <button class="btn btn-ghost btn-sm" id="couriersPrev" type="button">← Prev</button>
-        <span id="couriersPageInfo" aria-live="polite"></span>
-        <button class="btn btn-ghost btn-sm" id="couriersNext" type="button">Next →</button>
-      </div>
+        <div class="form-row">
+          <label for="adminLoginPassword">Password</label>
+          <input type="password" id="adminLoginPassword" required autocomplete="current-password">
+        </div>
+        <p class="form-error" id="adminLoginError" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        <p class="form-note">Prototype only — sessions are plain tokens in <code>localStorage</code>, not production-grade auth. See the server README.</p>
+      </form>
     </div>
   </section>
 </main>
-
-<!-- Registration used to sit squeezed into a narrow side column next to the
-     roster table — with Email/Gender/Photo/Fayda-ID-photo added, it no
-     longer fit. A dialog (same pattern as "Match a courier" on the Orders
-     page) gives it full room regardless of roster width. -->
-<dialog id="registerDialog" class="form-dialog">
-  <form id="courierForm" enctype="multipart/form-data">
-    <h3>Register a courier</h3>
-    <div class="form-row">
-      <label for="courierName">Full name</label>
-      <input type="text" id="courierName" required>
-    </div>
-    <div class="form-row">
-      <label for="courierPhone">Phone</label>
-      <input type="tel" id="courierPhone" required placeholder="09xx xxx xxx">
-    </div>
-    <div class="form-row">
-      <label for="courierEmail">Email</label>
-      <input type="email" id="courierEmail" required placeholder="name@example.com">
-    </div>
-    <div class="form-row">
-      <label for="courierGender">Gender</label>
-      <select id="courierGender" required>
-        <option value="" disabled selected>Select…</option>
-        <option value="female">Female</option>
-        <option value="male">Male</option>
-        <option value="other">Other</option>
-        <option value="prefer_not_to_say">Prefer not to say</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label for="courierFaydaId">Fayda ID (national digital ID)</label>
-      <input type="text" id="courierFaydaId" required inputmode="numeric" placeholder="e.g. 6109 8234 7715" pattern="[\d\s-]{6,20}">
-    </div>
-    <div class="form-row">
-      <label for="courierPassword">Password</label>
-      <input type="password" id="courierPassword" required minlength="6" autocomplete="new-password">
-    </div>
-    <p class="form-note">Sets up your <a href="login.html">Members login</a> — used to view your own delivery stats and earnings.</p>
-    <div class="form-row">
-      <label for="courierPhoto">Photo</label>
-      <input type="file" id="courierPhoto" accept="image/*" required>
-    </div>
-    <div class="form-row">
-      <label for="courierFaydaIdPhoto">Upload Fayda ID (photo of the card)</label>
-      <input type="file" id="courierFaydaIdPhoto" accept="image/*" required>
-    </div>
-    <fieldset class="tier-select">
-      <legend>Can deliver</legend>
-      <div class="tier-options" id="courierTierOptions">
-        <label class="tier-pill"><input type="checkbox" name="courierTier" value="express" checked><span>Express</span></label>
-        <label class="tier-pill"><input type="checkbox" name="courierTier" value="standard" checked><span>Standard</span></label>
-        <label class="tier-pill"><input type="checkbox" name="courierTier" value="secure"><span>Secure</span></label>
-        <label class="tier-pill"><input type="checkbox" name="courierTier" value="cargo"><span>Cargo</span></label>
-      </div>
-    </fieldset>
-    <p class="form-error" id="courierError" role="alert" hidden></p>
-    <div class="hero-actions">
-      <button type="submit" class="btn btn-primary">Register courier</button>
-      <button type="button" class="btn btn-ghost" id="courierCancel">Cancel</button>
-    </div>
-  </form>
-</dialog>
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
@@ -225,6 +138,6 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script src="assets/js/couriers.js"></script>
+<script src="assets/js/admin-login.js"></script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const { DatabaseSync } = require("node:sqlite");
+const { hashPassword } = require("./auth");
 
 const dataDir = path.join(__dirname, "data");
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
@@ -68,6 +69,23 @@ function init() {
       expires_at  TEXT NOT NULL
     );
 
+    -- Admin accounts — a separate actor type from couriers, its own token
+    -- space (admin_sessions), so a courier's bearer token can never work
+    -- against an admin-only route or vice versa.
+    CREATE TABLE IF NOT EXISTS admins (
+      id            INTEGER PRIMARY KEY AUTOINCREMENT,
+      username      TEXT NOT NULL UNIQUE,
+      password_hash TEXT NOT NULL,
+      created_at    TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS admin_sessions (
+      token       TEXT PRIMARY KEY,
+      admin_id    INTEGER NOT NULL REFERENCES admins(id),
+      created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+      expires_at  TEXT NOT NULL
+    );
+
     CREATE TABLE IF NOT EXISTS testimonials (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
       author_name TEXT NOT NULL,
@@ -99,6 +117,7 @@ function init() {
     CREATE INDEX IF NOT EXISTS idx_couriers_status ON couriers(status);
     CREATE INDEX IF NOT EXISTS idx_couriers_phone ON couriers(phone);
     CREATE INDEX IF NOT EXISTS idx_sessions_courier ON sessions(courier_id);
+    CREATE INDEX IF NOT EXISTS idx_admin_sessions_admin ON admin_sessions(admin_id);
     CREATE INDEX IF NOT EXISTS idx_wallet_tx_courier ON wallet_transactions(courier_id);
     CREATE INDEX IF NOT EXISTS idx_wallet_tx_order ON wallet_transactions(order_id);
   `);
@@ -135,7 +154,29 @@ function init() {
     WHERE status = 'delivered' AND commission_birr IS NULL
   `);
 
+  bootstrapAdmin();
   setupSearch();
+}
+
+// There's no public admin registration form (unlike couriers, who
+// self-register) — the one shared admin account is provisioned from
+// environment variables, the same way SMS_API_KEY/DATABASE_PATH already
+// configure this app. Runs on every startup: creates the account on first
+// boot, and re-hashes the password on any later boot where the env var
+// value has changed, so rotating the password is just an env var edit +
+// restart, no SQL needed.
+function bootstrapAdmin() {
+  const username = process.env.ADMIN_USERNAME;
+  const password = process.env.ADMIN_PASSWORD;
+  if (!username || !password) return;
+
+  const passwordHash = hashPassword(password);
+  const existing = db.prepare("SELECT id FROM admins WHERE username = ?").get(username);
+  if (existing) {
+    db.prepare("UPDATE admins SET password_hash = ? WHERE id = ?").run(passwordHash, existing.id);
+  } else {
+    db.prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)").run(username, passwordHash);
+  }
 }
 
 // FTS5 full-text search — an inverted index, not a `LIKE '%term%'` table

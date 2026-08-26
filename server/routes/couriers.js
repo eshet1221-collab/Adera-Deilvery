@@ -2,6 +2,7 @@ const express = require("express");
 const { db } = require("../db");
 const { hashPassword } = require("../auth");
 const { requireAuth } = require("./auth");
+const { requireAdminAuth } = require("./adminAuth");
 const { toFtsQuery, parsePagination } = require("../search");
 const { courierUpload } = require("../uploads");
 
@@ -40,7 +41,7 @@ function toCourierResponse(row) {
 // Fayda ID), status filter, and pagination, most recently registered first.
 // Search hits couriers_fts (an FTS5 inverted index), not a table scan, so
 // this stays fast whether there are a dozen couriers or several million.
-router.get("/", (req, res) => {
+router.get("/", requireAdminAuth, (req, res) => {
   const { page, pageSize, limit, offset } = parsePagination(req.query);
   const ftsQuery = req.query.q ? toFtsQuery(req.query.q) : null;
 
@@ -164,7 +165,7 @@ router.post("/", (req, res) => {
 // meant to be excluded from courier-matching once that's enforced — today
 // nothing stops matching an inactive courier, since matching is a manual
 // admin pick, not automatic (see README, "route-matching" out of scope).
-router.patch("/:id/status", (req, res) => {
+router.patch("/:id/status", requireAdminAuth, (req, res) => {
   const id = Number(req.params.id);
   const { status } = req.body || {};
 
@@ -224,14 +225,12 @@ function computeStatsByCourier() {
 
 // GET /api/couriers/stats — ADMIN VIEW: every courier's delivery count,
 // amount handled, and earnings (after commission), from completed
-// (delivered) orders only. No login required — this used to require a
-// courier's own session token, which meant any courier could see every
-// *other* courier's earnings. That's the access-control gap this closes:
-// the full roster view is now only reachable from the admin tooling
-// (earnings.html, alongside admin.html/couriers.html — same "no auth on
-// admin surfaces" caveat as the rest of them), and a courier's own login
-// (GET /me/stats below) only ever shows their own numbers.
-router.get("/stats", (req, res) => {
+// (delivered) orders only. Requires the shared admin login (requireAdminAuth)
+// — this used to require only a courier's own session token, which meant
+// any courier could see every *other* courier's earnings; that gap is
+// closed by keeping this admin-only, separate from a courier's own login
+// (GET /me/stats below), which only ever shows their own numbers.
+router.get("/stats", requireAdminAuth, (req, res) => {
   const sortKey = SORT_KEYS.has(req.query.sort) ? req.query.sort : "recent";
   const dir = req.query.dir === "asc" ? "asc" : "desc";
   const byCourier = computeStatsByCourier();

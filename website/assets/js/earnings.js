@@ -1,6 +1,12 @@
 (() => {
   "use strict";
 
+  const adminToken = localStorage.getItem("loyal-admin-token");
+  if (!adminToken) {
+    window.location.href = "admin-login.html";
+    return;
+  }
+
   const statsBody = document.getElementById("statsBody");
   const sortSelect = document.getElementById("sortSelect");
 
@@ -9,15 +15,32 @@
   }
 
   async function fetchJson(url) {
-    const res = await fetch(url);
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${adminToken}` } });
+    if (res.status === 401) {
+      localStorage.removeItem("loyal-admin-token");
+      localStorage.removeItem("loyal-admin-username");
+      window.location.href = "admin-login.html";
+      throw new Error("Session expired");
+    }
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
     return data;
   }
 
-  // No auth — GET /api/couriers/stats is the admin-side full roster view
-  // (see server/routes/couriers.js). A courier's own login only ever
-  // reaches GET /api/couriers/me/stats, which returns just their own row.
+  document.getElementById("adminLogout")?.addEventListener("click", async () => {
+    try {
+      await fetch("/api/admin/auth/logout", { method: "POST", headers: { Authorization: `Bearer ${adminToken}` } });
+    } catch {
+      // ignore — clear + redirect below regardless
+    }
+    localStorage.removeItem("loyal-admin-token");
+    localStorage.removeItem("loyal-admin-username");
+    window.location.href = "admin-login.html";
+  });
+
+  // GET /api/couriers/stats is the admin-side full roster view (see
+  // server/routes/couriers.js, requireAdminAuth). A courier's own login only
+  // ever reaches GET /api/couriers/me/stats, which returns just their own row.
   async function loadStats() {
     statsBody.innerHTML = `<tr><td colspan="8" class="empty-state">Loading…</td></tr>`;
     try {

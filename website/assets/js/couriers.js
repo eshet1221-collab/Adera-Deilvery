@@ -1,6 +1,28 @@
 (() => {
   "use strict";
 
+  // Unlike admin.html, this page also hosts PUBLIC courier self-registration
+  // (POST /api/couriers, no login) — so there's no page-wide redirect here.
+  // Only the roster listing and status toggle need an admin session; if one
+  // isn't present, the roster area shows a "log in as admin" prompt instead
+  // while the register button/dialog stays fully usable regardless.
+  const adminToken = localStorage.getItem("loyal-admin-token");
+
+  const adminLogoutBtn = document.getElementById("adminLogout");
+  if (adminToken) {
+    adminLogoutBtn.hidden = false;
+    adminLogoutBtn.addEventListener("click", async () => {
+      try {
+        await fetch("/api/admin/auth/logout", { method: "POST", headers: { Authorization: `Bearer ${adminToken}` } });
+      } catch {
+        // ignore — clear + redirect below regardless
+      }
+      localStorage.removeItem("loyal-admin-token");
+      localStorage.removeItem("loyal-admin-username");
+      window.location.href = "admin-login.html";
+    });
+  }
+
   const couriersBody = document.getElementById("couriersBody");
   const courierSearch = document.getElementById("courierSearch");
   const courierStatusFilter = document.getElementById("courierStatusFilter");
@@ -34,8 +56,37 @@
     };
   }
 
+  // Used only by the public registration form below (POST /api/couriers) —
+  // never carries an admin token.
   async function fetchJson(url, options) {
     const res = await fetch(url, options);
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    return data;
+  }
+
+  // Used by the roster listing + status toggle, which are admin-only.
+  async function adminFetchJson(url, options = {}) {
+    if (!adminToken) {
+      const err = new Error(
+        `Log in as <a href="admin-login.html">admin</a> to view or manage the courier roster.`
+      );
+      err.notAdmin = true;
+      throw err;
+    }
+    const res = await fetch(url, {
+      ...options,
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${adminToken}` },
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("loyal-admin-token");
+      localStorage.removeItem("loyal-admin-username");
+      const err = new Error(
+        `Your admin session expired — <a href="admin-login.html">log in again</a> to view the roster.`
+      );
+      err.notAdmin = true;
+      throw err;
+    }
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
     return data;
@@ -48,14 +99,23 @@
     if (courierStatusFilter.value) params.set("status", courierStatusFilter.value);
 
     try {
-      const data = await fetchJson(`/api/couriers?${params}`);
+      const data = await adminFetchJson(`/api/couriers?${params}`);
       state.page = data.page;
       state.totalPages = data.totalPages;
       state.total = data.total;
       renderCouriers(data.couriers || []);
       renderPagination();
     } catch (err) {
-      couriersBody.innerHTML = `<tr><td colspan="9" class="empty-state">${esc(err.message)}</td></tr>`;
+      // err.message may contain the deliberate <a> markup above (notAdmin
+      // case) — safe to inject as-is since it's a literal string this file
+      // wrote, not user input; err.notAdmin messages are the only ones with
+      // markup, everything else is plain text from esc()-safe server errors.
+      couriersBody.innerHTML = `<tr><td colspan="9" class="empty-state">${err.notAdmin ? err.message : esc(err.message)}</td></tr>`;
+      if (err.notAdmin) {
+        couriersPageInfo.textContent = "";
+        couriersPrev.disabled = true;
+        couriersNext.disabled = true;
+      }
     }
   }
 
@@ -131,7 +191,7 @@
     const nextStatus = btn.getAttribute("data-next-status");
     btn.disabled = true;
     try {
-      await fetchJson(`/api/couriers/${id}/status`, {
+      await adminFetchJson(`/api/couriers/${id}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: nextStatus }),

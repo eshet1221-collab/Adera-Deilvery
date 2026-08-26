@@ -1,6 +1,12 @@
 (() => {
   "use strict";
 
+  const adminToken = localStorage.getItem("loyal-admin-token");
+  if (!adminToken) {
+    window.location.href = "admin-login.html";
+    return;
+  }
+
   const tierOptionsEl = document.getElementById("callTierOptions");
   const distanceRange = document.getElementById("callDistance");
   const distanceValue = document.getElementById("callDistanceValue");
@@ -31,12 +37,32 @@
     return String(str ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
-  async function fetchJson(url, options) {
-    const res = await fetch(url, options);
+  async function fetchJson(url, options = {}) {
+    const res = await fetch(url, {
+      ...options,
+      headers: { ...(options.headers || {}), Authorization: `Bearer ${adminToken}` },
+    });
+    if (res.status === 401) {
+      localStorage.removeItem("loyal-admin-token");
+      localStorage.removeItem("loyal-admin-username");
+      window.location.href = "admin-login.html";
+      throw new Error("Session expired");
+    }
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
     return data;
   }
+
+  document.getElementById("adminLogout")?.addEventListener("click", async () => {
+    try {
+      await fetchJson("/api/admin/auth/logout", { method: "POST" });
+    } catch {
+      // ignore — clear + redirect below regardless
+    }
+    localStorage.removeItem("loyal-admin-token");
+    localStorage.removeItem("loyal-admin-username");
+    window.location.href = "admin-login.html";
+  });
 
   function showError(message) {
     errorEl.textContent = message;

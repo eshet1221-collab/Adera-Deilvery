@@ -5,7 +5,8 @@ const { generateTrackingCode, generateOtp } = require("../utils");
 const { upload } = require("../uploads");
 const { toFtsQuery, parsePagination } = require("../search");
 const { sendOtpSms, isConfigured: smsConfigured } = require("../sms");
-const { requireAuth, optionalAuth } = require("./auth");
+const { requireAuth } = require("./auth");
+const { requireAdminAuth, requireAdminOrCourierAuth } = require("./adminAuth");
 
 const router = express.Router();
 
@@ -77,8 +78,8 @@ function fetchOrderWithCourier(id) {
 }
 
 // Only bites when the request actually carried a courier's own session
-// token (see optionalAuth) — the unauthenticated admin/call-center tools
-// keep working exactly as before, since req.courier is never set for them.
+// token (see requireAdminOrCourierAuth) — an admin-authenticated request
+// sets req.admin instead and is never restricted by this.
 function assertOwnership(req, res, row) {
   if (req.courier && row.courier_id !== req.courier.id) {
     res.status(403).json({ error: "This order isn't assigned to you" });
@@ -167,7 +168,7 @@ router.post("/", async (req, res) => {
 // filters, and pagination — so this stays usable however many rows are in
 // the table. Search hits orders_fts (an FTS5 inverted index over tracking
 // code, sender/recipient name+phone, and both addresses), not a LIKE scan.
-router.get("/", (req, res) => {
+router.get("/", requireAdminAuth, (req, res) => {
   const { page, pageSize, limit, offset } = parsePagination(req.query);
   const ftsQuery = req.query.q ? toFtsQuery(req.query.q) : null;
 
@@ -253,10 +254,11 @@ router.get("/track/:code", (req, res) => {
 // POST /api/orders/:id/proof — upload the photo/video chain-of-custody proof.
 // Only allowed while an order is picked_up (courier has the item, hasn't
 // handed it off yet) — mirrors "before giving the item to the receiver".
-// optionalAuth: the admin tool calls this with no token at all (unchanged
-// behavior); the courier-facing "My Deliveries" page calls it with its own
-// session token, which is then required to match the order's courier_id.
-router.post("/:id/proof", optionalAuth, (req, res) => {
+// requireAdminOrCourierAuth: the admin tool calls this with an admin
+// session token; the courier-facing "My Deliveries" page calls it with its
+// own session token, which is then required to match the order's
+// courier_id (see assertOwnership).
+router.post("/:id/proof", requireAdminOrCourierAuth, (req, res) => {
   // Ownership is checked before the upload runs, not after — no reason to
   // let a courier's token write a file to disk for an order that isn't
   // theirs just to reject it a moment later.
@@ -293,7 +295,7 @@ router.post("/:id/proof", optionalAuth, (req, res) => {
 // mark a COD order delivered, and trigger their own commission debit,
 // without acknowledging they were actually paid. Not applicable to prepaid
 // orders (the sender already paid into escrow before matching).
-router.post("/:id/confirm-cash", optionalAuth, (req, res) => {
+router.post("/:id/confirm-cash", requireAdminOrCourierAuth, (req, res) => {
   const id = Number(req.params.id);
   const row = db.prepare("SELECT * FROM orders WHERE id = ?").get(id);
   if (!row) return res.status(404).json({ error: "Order not found" });
@@ -350,12 +352,13 @@ router.post("/:id/payment-reference", (req, res) => {
 // PATCH /api/orders/:id/status — advance the order through its lifecycle.
 // matched   -> requires courierId
 // delivered -> requires proof already submitted AND the correct otp
-// optionalAuth: same deal as POST /:id/proof above — a courier's own token
-// can only advance an order already assigned to them. Since row.courier_id
+// requireAdminOrCourierAuth: same deal as POST /:id/proof above — a
+// courier's own token can only advance an order already assigned to them.
+// Since row.courier_id
 // is still null going into "matched", this also means a courier's token can
 // never perform the initial match themselves — that stays an admin/call
 // center action, not a self-claim.
-router.patch("/:id/status", optionalAuth, (req, res) => {
+router.patch("/:id/status", requireAdminOrCourierAuth, (req, res) => {
   const id = Number(req.params.id);
   const { status, courierId, otp } = req.body || {};
 

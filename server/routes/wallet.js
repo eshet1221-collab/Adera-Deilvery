@@ -1,6 +1,7 @@
 const express = require("express");
 const { db } = require("../db");
 const { requireAuth } = require("./auth");
+const { requireAdminAuth } = require("./adminAuth");
 
 const router = express.Router();
 
@@ -81,10 +82,8 @@ router.post("/me/topup", requireAuth, (req, res) => {
   });
 });
 
-// GET /api/wallet/:courierId — admin view of any courier's wallet. No auth,
-// matching this app's other unauthenticated admin surfaces (couriers.js,
-// orders.js admin routes).
-router.get("/:courierId", (req, res) => {
+// GET /api/wallet/:courierId — admin view of any courier's wallet.
+router.get("/:courierId", requireAdminAuth, (req, res) => {
   const courier = db.prepare("SELECT * FROM couriers WHERE id = ?").get(Number(req.params.courierId));
   if (!courier) return res.status(404).json({ error: "Courier not found" });
 
