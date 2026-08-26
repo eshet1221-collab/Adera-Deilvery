@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book a Delivery — Loyal Delivery Movers</title>
 <meta name="description" content="Book a delivery on Loyal Delivery Movers — pick a tier, get an instant price, and get a tracking code.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b6e4f'/%3E%3Cpath d='M27 66 L50 30 L73 66' stroke='%23fcfcfb' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='50' cy='66' r='6' fill='%23fcfcfb'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b6e4f'/%3E%3Cpath d='M50 22 L77 37 L77 67 L50 82 L23 67 L23 37 Z' fill='none' stroke='%23fcfcfb' stroke-width='6.5' stroke-linejoin='round'/%3E%3Cpath d='M23 37 L50 52 L77 37 M50 52 L50 82' stroke='%23fcfcfb' stroke-width='6.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M39 51 L47 59 L64 40' stroke='%23fcfcfb' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='64' cy='40' r='4.5' fill='%23fcfcfb'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
   <div class="wrap header-inner">
     <a href="index.html" class="brand" aria-label="Loyal Delivery Movers home">
       <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="currentColor"/><path d="M27 66 L50 30 L73 66" stroke="var(--surface-1)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="66" r="6" fill="var(--surface-1)"/></svg>
+        <svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="currentColor"/><path d="M50 22 L77 37 L77 67 L50 82 L23 67 L23 37 Z" fill="none" stroke="var(--surface-1)" stroke-width="6.5" stroke-linejoin="round"/><path d="M23 37 L50 52 L77 37 M50 52 L50 82" stroke="var(--surface-1)" stroke-width="6.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/><path d="M39 51 L47 59 L64 40" stroke="var(--surface-1)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="64" cy="40" r="4.5" fill="var(--surface-1)"/></svg>
       </span>
       <span class="brand-name">Loyal&nbsp;Delivery&nbsp;Movers</span>
     </a>
@@ -60,7 +60,7 @@
       <a href="earnings.html">Earnings</a>
         </div>
       </div>
-      <a href="order.html" class="nav-cta">Get Started</a>
+      <a href="order.html" class="nav-cta">Send</a>
     </nav>
 
     <div class="header-actions">
@@ -78,9 +78,9 @@
 <main id="main">
   <section class="section page-hero">
     <div class="wrap">
-      <p class="kicker">Book a delivery</p>
-      <h1 class="page-title">Where's it going?</h1>
-      <p class="section-lede">This creates a real order in the prototype database — pick a tier, fill in pickup/drop-off details, and you'll get back a tracking code and a one-time delivery code.</p>
+      <p class="kicker">Book a delivery <span class="am-label" lang="am">/ ማድረሻ ይያዙ</span></p>
+      <h1 class="page-title">Where's it going? <span class="am-label" lang="am">/ የት ነው የሚሄደው?</span></h1>
+      <p class="section-lede">This creates a real order in the prototype database — pick a tier, fill in pickup/drop-off details, and you'll get back a tracking code and a one-time delivery code.<br><span class="am-label" lang="am">ይህ በምሳሌ ዳታቤዝ ውስጥ እውነተኛ ትዕዛዝ ይፈጥራል — እርከን ይምረጡ፣ የመውሰጃ/የማድረሻ ዝርዝሮችን ይሙሉ፣ የመከታተያ ኮድ እና ነጠላ ጊዜ የማድረሻ ኮድ ያገኛሉ።</span></p>
     </div>
   </section>
 
@@ -89,7 +89,7 @@
 
       <form class="form-card" id="orderForm" novalidate>
         <div class="form-section">
-          <h2 class="form-section-title">1. Choose a tier</h2>
+          <h2 class="form-section-title">1. Choose a tier <span class="am-label" lang="am">/ እርከን ይምረጡ</span></h2>
           <fieldset class="tier-select" id="orderTierSelect">
             <legend class="visually-hidden">Service tier</legend>
             <div id="tierOptions" class="tier-options">
@@ -99,81 +99,81 @@
         </div>
 
         <div class="form-section">
-          <h2 class="form-section-title">2. Distance</h2>
+          <h2 class="form-section-title">2. Distance <span class="am-label" lang="am">/ ርቀት</span></h2>
           <div class="distance-control">
             <div class="distance-label">
-              <label for="bookingDistance">Estimated distance</label>
+              <label for="bookingDistance">Estimated distance <span class="am-label" lang="am">/ የተገመተ ርቀት</span></label>
               <output id="bookingDistanceValue" for="bookingDistance">5 km</output>
             </div>
             <input type="range" id="bookingDistance" min="1" max="35" value="5" step="1">
           </div>
           <div class="form-row">
-            <label for="itemDescription">What are you sending? <span class="optional">(optional)</span></label>
+            <label for="itemDescription">What are you sending? <span class="am-label" lang="am">/ ምን እየላኩ ነው?</span> <span class="optional">(optional / አማራጭ)</span></label>
             <input type="text" id="itemDescription" name="itemDescription" placeholder="e.g. Sealed envelope, laptop, 3 cartons…">
           </div>
         </div>
 
         <div class="form-section">
-          <h2 class="form-section-title">3. Sender</h2>
+          <h2 class="form-section-title">3. Sender <span class="am-label" lang="am">/ ላኪ</span></h2>
           <div class="form-grid">
             <div class="form-row">
-              <label for="senderName">Your name</label>
+              <label for="senderName">Your name <span class="am-label" lang="am">/ የእርስዎ ስም</span></label>
               <input type="text" id="senderName" name="senderName" required autocomplete="name">
             </div>
             <div class="form-row">
-              <label for="senderPhone">Your phone</label>
+              <label for="senderPhone">Your phone <span class="am-label" lang="am">/ የእርስዎ ስልክ</span></label>
               <input type="tel" id="senderPhone" name="senderPhone" required autocomplete="tel" placeholder="09xx xxx xxx">
             </div>
           </div>
           <div class="form-row">
-            <label for="pickupAddress">Pickup location</label>
+            <label for="pickupAddress">Pickup location <span class="am-label" lang="am">/ የመውሰጃ ቦታ</span></label>
             <input type="text" id="pickupAddress" name="pickupAddress" required placeholder="e.g. Bole Medhanealem, near Zefmesh Grand Mall">
           </div>
         </div>
 
         <div class="form-section">
-          <h2 class="form-section-title">4. Recipient</h2>
+          <h2 class="form-section-title">4. Recipient <span class="am-label" lang="am">/ ተቀባይ</span></h2>
           <div class="form-grid">
             <div class="form-row">
-              <label for="recipientName">Recipient name</label>
+              <label for="recipientName">Recipient name <span class="am-label" lang="am">/ የተቀባይ ስም</span></label>
               <input type="text" id="recipientName" name="recipientName" required>
             </div>
             <div class="form-row">
-              <label for="recipientPhone">Recipient phone</label>
+              <label for="recipientPhone">Recipient phone <span class="am-label" lang="am">/ የተቀባይ ስልክ</span></label>
               <input type="tel" id="recipientPhone" name="recipientPhone" required placeholder="09xx xxx xxx">
             </div>
           </div>
           <div class="form-row">
-            <label for="dropoffAddress">Drop-off location</label>
+            <label for="dropoffAddress">Drop-off location <span class="am-label" lang="am">/ የማድረሻ ቦታ</span></label>
             <input type="text" id="dropoffAddress" name="dropoffAddress" required placeholder="e.g. CMC, behind Total gas station">
           </div>
         </div>
 
         <div class="form-section">
-          <h2 class="form-section-title">5. Payment</h2>
+          <h2 class="form-section-title">5. Payment <span class="am-label" lang="am">/ ክፍያ</span></h2>
           <fieldset class="tier-select" id="paymentMethodSelect">
             <legend class="visually-hidden">Payment method</legend>
             <div class="tier-options">
               <label class="tier-pill" data-payment="prepaid">
                 <input type="radio" name="paymentMethod" value="prepaid" checked>
-                <span>Pay now (escrow)</span>
+                <span>Pay now (escrow) <span class="am-label" lang="am">/ አሁን ይክፈሉ (ኤስክሮ)</span></span>
               </label>
               <label class="tier-pill" data-payment="cod">
                 <input type="radio" name="paymentMethod" value="cod">
-                <span>Cash/digital on delivery</span>
+                <span>Cash/digital on delivery <span class="am-label" lang="am">/ ጥሬ ገንዘብ በማድረሻ ጊዜ</span></span>
               </label>
             </div>
           </fieldset>
-          <p class="form-note">Pay now: the fee is held in escrow and released to the courier once the recipient confirms delivery. Cash on delivery: the recipient pays the courier directly when the item arrives.</p>
+          <p class="form-note">Pay now: the fee is held in escrow and released to the courier once the recipient confirms delivery. Cash on delivery: the recipient pays the courier directly when the item arrives.<br><span class="am-label" lang="am">አሁን ይክፈሉ፦ ክፍያው በኤስክሮ ተይዞ ተቀባዩ ማድረሻውን ካረጋገጠ በኋላ ለተላላኪው ይለቀቃል። በማድረሻ ጊዜ ክፍያ፦ ተቀባዩ ዕቃው ሲደርስ ለተላላኪው በቀጥታ ይከፍላል።</span></p>
         </div>
 
         <p class="form-error" id="orderError" role="alert" hidden></p>
-        <button type="submit" class="btn btn-primary btn-block" id="orderSubmit">Confirm &amp; get price</button>
+        <button type="submit" class="btn btn-primary btn-block" id="orderSubmit">Confirm &amp; get price <span class="am-label" lang="am" style="color:inherit;opacity:.85;">/ ያረጋግጡ እና ዋጋ ያግኙ</span></button>
         <p class="form-note">Prototype only — this creates a real row in the SQLite database via <code>POST /api/orders</code>, but nothing is actually dispatched.</p>
       </form>
 
       <aside class="calc-result calc-result-standalone" id="pricePreview">
-        <p class="calc-result-label">Live price preview</p>
+        <p class="calc-result-label">Live price preview <span class="am-label" lang="am">/ የቀጥታ ዋጋ ቅድመ እይታ</span></p>
         <p class="calc-total"><span id="bookingTotal">—</span><span class="calc-currency">birr</span></p>
         <p class="calc-breakdown" id="bookingBreakdown">Choose a tier and distance</p>
         <p class="calc-savings" id="bookingSavings"></p>
@@ -185,38 +185,38 @@
   <section class="section" id="confirmSection" hidden>
     <div class="wrap">
       <div class="confirmation-card">
-        <span class="confirmation-badge">Order created</span>
-        <h2>Tracking code <span id="confTrackingCode" class="tracking-code"></span></h2>
-        <p class="section-lede" id="confOtpLede">Give the recipient this delivery code — they'll need it to confirm receipt at drop-off. It's texted to them automatically once an SMS gateway is configured; otherwise it's shown here directly.</p>
+        <span class="confirmation-badge">Order created <span class="am-label" lang="am" style="color:inherit;opacity:.85;">/ ትዕዛዝ ተፈጥሯል</span></span>
+        <h2>Tracking code <span class="am-label" lang="am">/ የመከታተያ ኮድ</span> <span id="confTrackingCode" class="tracking-code"></span></h2>
+        <p class="section-lede" id="confOtpLede">Give the recipient this delivery code — they'll need it to confirm receipt at drop-off. It's texted to them automatically once an SMS gateway is configured; otherwise it's shown here directly.<br><span class="am-label" lang="am">ይህን የማድረሻ ኮድ ለተቀባዩ ይስጡ — በማድረሻ ጊዜ ማረጋገጫ ለመስጠት ያስፈልጋቸዋል። የኤስኤምኤስ አገልግሎት ከተዋቀረ በራስ-ሰር ይላክላቸዋል፤ ካልሆነ እዚህ በቀጥታ ይታያል።</span></p>
         <div class="otp-display">
-          <span id="confOtpLabel">Delivery code (OTP)</span>
+          <span id="confOtpLabel">Delivery code (OTP) <span class="am-label" lang="am">/ የማድረሻ ኮድ</span></span>
           <strong id="confOtp"></strong>
         </div>
         <dl class="confirmation-meta">
-          <div><dt>Tier</dt><dd id="confTier"></dd></div>
-          <div><dt>Price</dt><dd id="confPrice"></dd></div>
-          <div><dt>From</dt><dd id="confPickup"></dd></div>
-          <div><dt>To</dt><dd id="confDropoff"></dd></div>
+          <div><dt>Tier <span class="am-label" lang="am">/ እርከን</span></dt><dd id="confTier"></dd></div>
+          <div><dt>Price <span class="am-label" lang="am">/ ዋጋ</span></dt><dd id="confPrice"></dd></div>
+          <div><dt>From <span class="am-label" lang="am">/ ከ</span></dt><dd id="confPickup"></dd></div>
+          <div><dt>To <span class="am-label" lang="am">/ ወደ</span></dt><dd id="confDropoff"></dd></div>
         </dl>
 
         <!-- Prepaid orders only: pay externally, then submit the transaction
              reference to move the order out of escrow-pending. -->
         <div class="form-card" id="payNowPanel" hidden style="margin-top: 24px;">
-          <h3 class="form-section-title">Pay now</h3>
-          <p class="form-note">Pay <strong id="payAmount"></strong> birr via Telebirr, CBE Birr, or Chapa to the Loyal Delivery Movers merchant account, then enter the transaction reference below. A courier won't be matched until this is confirmed.</p>
+          <h3 class="form-section-title">Pay now <span class="am-label" lang="am">/ አሁን ይክፈሉ</span></h3>
+          <p class="form-note">Pay <strong id="payAmount"></strong> birr via Telebirr, CBE Birr, or Chapa to the Loyal Delivery Movers merchant account, then enter the transaction reference below. A courier won't be matched until this is confirmed.<br><span class="am-label" lang="am">ከላይ የተጠቀሰውን ብር በቴሌብር፣ በሲቢኢ ብር፣ ወይም በቻፓ ወደ Loyal Delivery Movers የነጋዴ አካውንት ይክፈሉ፣ ከዚያም የክፍያ ማጣቀሻ ቁጥሩን ከታች ያስገቡ። ይህ እስካልተረጋገጠ ድረስ ተላላኪ አይመደብም።</span></p>
           <div class="form-row">
-            <label for="payReference">Transaction reference</label>
+            <label for="payReference">Transaction reference <span class="am-label" lang="am">/ የክፍያ ማጣቀሻ ቁጥር</span></label>
             <input type="text" id="payReference" placeholder="e.g. Telebirr transaction ID" required>
           </div>
           <p class="form-error" id="payError" role="alert" hidden></p>
-          <button class="btn btn-primary" type="button" id="paySubmit">I've paid — submit reference</button>
-          <p class="form-note" id="payConfirmed" hidden>Payment confirmed — this order is now escrowed and ready to be matched with a courier.</p>
+          <button class="btn btn-primary" type="button" id="paySubmit">I've paid — submit reference <span class="am-label" lang="am" style="color:inherit;opacity:.85;">/ ከፍያለሁ — ላክ</span></button>
+          <p class="form-note" id="payConfirmed" hidden>Payment confirmed — this order is now escrowed and ready to be matched with a courier.<br><span class="am-label" lang="am">ክፍያ ተረጋግጧል — ይህ ትዕዛዝ አሁን በኤስክሮ ውስጥ ነው እና ለተላላኪ ለመመደብ ዝግጁ ነው።</span></p>
         </div>
-        <p class="form-note" id="codNote" hidden>Cash/digital on delivery — pay the courier directly when your item arrives.</p>
+        <p class="form-note" id="codNote" hidden>Cash/digital on delivery — pay the courier directly when your item arrives.<br><span class="am-label" lang="am">ጥሬ ገንዘብ/ዲጂታል በማድረሻ ጊዜ — ዕቃዎ ሲደርስ ለተላላኪው በቀጥታ ይክፈሉ።</span></p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" id="confTrackLink" href="track.html">Track this order</a>
-          <button class="btn btn-ghost" type="button" id="confNewOrder">Book another</button>
+          <a class="btn btn-primary" id="confTrackLink" href="track.html">Track this order <span class="am-label" lang="am" style="color:inherit;opacity:.85;">/ ይህን ትዕዛዝ ይከታተሉ</span></a>
+          <button class="btn btn-ghost" type="button" id="confNewOrder">Book another <span class="am-label" lang="am">/ ሌላ ይላኩ</span></button>
         </div>
       </div>
     </div>
@@ -227,7 +227,7 @@
   <div class="wrap footer-inner">
     <div class="footer-brand">
       <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="currentColor"/><path d="M27 66 L50 30 L73 66" stroke="var(--surface-1)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="66" r="6" fill="var(--surface-1)"/></svg>
+        <svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="currentColor"/><path d="M50 22 L77 37 L77 67 L50 82 L23 67 L23 37 Z" fill="none" stroke="var(--surface-1)" stroke-width="6.5" stroke-linejoin="round"/><path d="M23 37 L50 52 L77 37 M50 52 L50 82" stroke="var(--surface-1)" stroke-width="6.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/><path d="M39 51 L47 59 L64 40" stroke="var(--surface-1)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="64" cy="40" r="4.5" fill="var(--surface-1)"/></svg>
       </span>
       <div>
         <p class="footer-name">Loyal Delivery Movers</p>
@@ -240,7 +240,7 @@
       <a href="index.html#calculator">Pricing</a>
       <a href="index.html#security">Security</a>
       <a href="index.html#roadmap">Roadmap</a>
-      <a href="order.html">Ship</a>
+      <a href="order.html">Send</a>
       <a href="track.html">Track</a>
       <a href="admin.html">Admin</a>
       <a href="couriers.html">Couriers</a>

@@ -427,6 +427,7 @@ button { font: inherit; }
 .form-row { display: flex; flex-direction: column; gap: 6px; }
 .form-row label { font-size: .8rem; font-weight: 600; color: var(--text-secondary); }
 .form-row .optional { font-weight: 400; color: var(--text-muted); }
+.am-label { color: var(--text-muted); font-weight: 400; }
 .form-row input, .form-row select, .form-row textarea {
   background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: 10px;
   padding: 10px 12px; color: var(--text-primary); font: inherit; font-size: .92rem;

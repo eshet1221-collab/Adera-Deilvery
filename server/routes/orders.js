@@ -204,7 +204,13 @@ router.get("/", (req, res) => {
     .all(...params, limit, offset);
 
   res.json({
-    orders: rows.map((row) => toOrderResponse(row)),
+    // includeOtp: this is the admin/call-center listing (no login, internal
+    // tooling only) — staff need to be able to read out the delivery code
+    // over the phone if a recipient says they never got the SMS. Never
+    // exposed on GET /mine (couriers must get it verbally from the
+    // recipient, not read it off their own screen) or GET /track/:code
+    // (public).
+    orders: rows.map((row) => toOrderResponse(row, { includeOtp: true })),
     total,
     page,
     pageSize,

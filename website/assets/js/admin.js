@@ -171,7 +171,9 @@
       .map(
         (o) => `
         <tr data-order-row="${o.id}">
-          <td><a class="tracking-code" href="/track.html?code=${encodeURIComponent(o.trackingCode)}" target="_blank" rel="noopener">${esc(o.trackingCode)}</a></td>
+          <td><a class="tracking-code" href="/track.html?code=${encodeURIComponent(o.trackingCode)}" target="_blank" rel="noopener">${esc(o.trackingCode)}</a>${
+            o.otpCode ? `<br><span class="otp-hint" style="font-size:.78rem;color:var(--text-muted);">Code: ${esc(o.otpCode)}</span>` : ""
+          }</td>
           <td>${esc(o.tier)}</td>
           <td class="wrap-cell">${esc(o.pickupAddress)} → ${esc(o.dropoffAddress)}</td>
           <td>${Math.round(o.priceBirr).toLocaleString("en-US")} birr</td>
