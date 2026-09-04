@@ -81,6 +81,22 @@
   const calcBreakdown = document.getElementById("calcBreakdown");
   const calcSavings = document.getElementById("calcSavings");
   const tierInputs = document.querySelectorAll('#tierSelect input[name="tier"]');
+  const calculatorLocked = document.getElementById("calculatorLocked");
+  const calculatorUnlocked = document.getElementById("calculatorUnlocked");
+
+  // "Live pricing" on the homepage is gated to logged-in users — any of the
+  // three account types (admin, courier, or a sender account) unlocks it.
+  // Only index.html carries calculatorLocked/calculatorUnlocked, so this is
+  // a no-op everywhere else.
+  const isLoggedIn = Boolean(
+    localStorage.getItem("loyal-admin-token") ||
+      localStorage.getItem("loyal-token") ||
+      localStorage.getItem("loyal-sender-token")
+  );
+  if (calculatorLocked && calculatorUnlocked) {
+    calculatorLocked.hidden = isLoggedIn;
+    calculatorUnlocked.hidden = !isLoggedIn;
+  }
 
   function currentTierKey() {
     const checked = document.querySelector('#tierSelect input[name="tier"]:checked');

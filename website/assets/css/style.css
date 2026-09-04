@@ -295,6 +295,12 @@ button { font: inherit; }
 .callout p { color: var(--text-primary); font-size: .92rem; line-height: 1.6; }
 
 /* ---------- calculator ---------- */
+.calc-locked {
+  margin-top: 44px; background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--radius-l);
+  box-shadow: var(--shadow); padding: 48px 32px; text-align: center; display: flex; flex-direction: column;
+  align-items: center; gap: 18px;
+}
+.calc-locked p { margin: 0; color: var(--text-secondary); font-size: 1rem; }
 .calc {
   margin-top: 44px; background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--radius-l);
   box-shadow: var(--shadow); display: grid; grid-template-columns: 1.3fr 1fr; overflow: hidden;
@@ -611,6 +617,11 @@ a.tracking-code:hover { text-decoration: underline; }
   padding: 0;
 }
 .link-btn:hover { color: #d03b3b; }
+.form-toggle-link {
+  background: none; border: none; color: var(--brand); font: inherit; cursor: pointer; text-decoration: underline;
+  padding: 0;
+}
+.form-toggle-link:hover { color: var(--brand-strong, var(--brand)); }
 
 .admin-couriers-wrap { margin-top: 40px; }
 

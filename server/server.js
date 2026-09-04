@@ -8,6 +8,7 @@ const ordersRouter = require("./routes/orders");
 const couriersRouter = require("./routes/couriers");
 const { router: authRouter } = require("./routes/auth");
 const { router: adminAuthRouter } = require("./routes/adminAuth");
+const { router: senderAuthRouter } = require("./routes/senderAuth");
 const testimonialsRouter = require("./routes/testimonials");
 const walletRouter = require("./routes/wallet");
 
@@ -30,6 +31,7 @@ app.use("/api/couriers", couriersRouter);
 app.use("/api/wallet", walletRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/admin/auth", adminAuthRouter);
+app.use("/api/senders/auth", senderAuthRouter);
 app.use("/api/testimonials", testimonialsRouter);
 
 // Uploaded delivery-proof photos/videos. Unauthenticated — filenames are

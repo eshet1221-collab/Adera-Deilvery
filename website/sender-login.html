@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Members Dashboard — Loyal Delivery Movers</title>
-<meta name="description" content="Loyal Delivery Movers courier dashboard — delivery counts, amounts, and earnings.">
+<title>Log In — Loyal Delivery Movers</title>
+<meta name="description" content="Log in or create an account to see live pricing on Loyal Delivery Movers.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b6e4f'/%3E%3Cpath d='M50 22 L77 37 L77 67 L50 82 L23 67 L23 37 Z' fill='none' stroke='%23fcfcfb' stroke-width='6.5' stroke-linejoin='round'/%3E%3Cpath d='M23 37 L50 52 L77 37 M50 52 L50 82' stroke='%23fcfcfb' stroke-width='6.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M39 51 L47 59 L64 40' stroke='%23fcfcfb' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='64' cy='40' r='4.5' fill='%23fcfcfb'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -25,13 +25,13 @@
       <a href="index.html#solution">4 levels</a>
       <a href="index.html#calculator">Pricing</a>
       <a href="index.html#security">Security</a>
-      <div class="nav-dropdown is-active" id="courierNavDropdown">
+      <div class="nav-dropdown" id="courierNavDropdown">
         <button class="nav-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
           Courier
           <svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="nav-dropdown-menu">
-      <a href="dashboard.html" class="is-active">Members</a>
+      <a href="dashboard.html">Members</a>
       <a href="deliveries.html">My Deliveries</a>
       <a href="wallet.html">Wallet</a>
         </div>
@@ -77,33 +77,46 @@
 
 <main id="main">
   <section class="section page-hero">
-    <div class="wrap dash-head">
-      <div>
-        <p class="kicker">Members</p>
-        <h1 class="page-title" id="dashWelcome">Loading…</h1>
-        <p class="section-lede">Your own delivery count, amount handled, and earnings — not anyone else's. See <a href="deliveries.html">My Deliveries</a> to manage your assigned orders.</p>
-      </div>
-      <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Log out</button>
+    <div class="wrap">
+      <p class="kicker">Your account</p>
+      <h1 class="page-title" id="senderPageTitle">Log in</h1>
+      <p class="section-lede" id="senderPageLede">Log in to see live pricing, or create an account if you're new here.</p>
     </div>
   </section>
 
-  <div class="wrap" style="margin-top: -12px;">
-    <p class="form-error" id="suspendedBanner" role="alert" hidden>Your wallet is suspended — top up on the <a href="wallet.html">Wallet</a> page to accept new Cash-on-Delivery orders.</p>
-  </div>
-
   <section class="section section-tint">
     <div class="wrap">
-      <div class="admin-head">
-        <h2>Your stats</h2>
-      </div>
-      <div class="stat-grid stat-grid-5" id="myStatsGrid">
-        <div class="stat-tile"><strong id="statDeliveries">—</strong><span>Deliveries completed</span></div>
-        <div class="stat-tile"><strong id="statAmount">—</strong><span>Amount handled</span></div>
-        <div class="stat-tile"><strong id="statEarnings">—</strong><span>Your earnings</span></div>
-        <div class="stat-tile"><strong id="statWallet">—</strong><span>Wallet balance</span></div>
-        <div class="stat-tile"><strong id="statLast">—</strong><span>Last delivery</span></div>
-      </div>
-      <p class="form-note">"Earnings" is price minus the flat 18% platform commission — counted only for delivered orders. Your wallet balance is separate: it's credited 82% of the price on prepaid deliveries, and debited 18% commission on Cash-on-Delivery deliveries (see <a href="wallet.html">Wallet</a>).</p>
+      <form class="form-card login-card" id="senderLoginForm">
+        <div class="form-row">
+          <label for="senderLoginPhone">Phone</label>
+          <input type="tel" id="senderLoginPhone" required placeholder="09xx xxx xxx" autocomplete="username">
+        </div>
+        <div class="form-row">
+          <label for="senderLoginPassword">Password</label>
+          <input type="password" id="senderLoginPassword" required autocomplete="current-password">
+        </div>
+        <p class="form-error" id="senderLoginError" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        <p class="form-note">New here? <button type="button" class="form-toggle-link" id="showSignup">Create an account</button> instead.</p>
+      </form>
+
+      <form class="form-card login-card" id="senderSignupForm" hidden>
+        <div class="form-row">
+          <label for="senderSignupName">Full name</label>
+          <input type="text" id="senderSignupName" required>
+        </div>
+        <div class="form-row">
+          <label for="senderSignupPhone">Phone</label>
+          <input type="tel" id="senderSignupPhone" required placeholder="09xx xxx xxx" autocomplete="username">
+        </div>
+        <div class="form-row">
+          <label for="senderSignupPassword">Password</label>
+          <input type="password" id="senderSignupPassword" required minlength="6" autocomplete="new-password">
+        </div>
+        <p class="form-error" id="senderSignupError" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+        <p class="form-note">Already have an account? <button type="button" class="form-toggle-link" id="showLogin">Log in</button> instead.</p>
+      </form>
     </div>
   </section>
 </main>
@@ -143,6 +156,6 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/sender-login.js"></script>
 </body>
 </html>

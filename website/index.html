@@ -22,7 +22,7 @@
 
     <nav class="main-nav" id="mainNav" aria-label="Primary">
       <a href="index.html#problem">Problem</a>
-      <a href="index.html#solution">4 Tiers</a>
+      <a href="index.html#solution">4 levels</a>
       <a href="index.html#calculator">Pricing</a>
       <a href="index.html#security">Security</a>
       <div class="nav-dropdown" id="courierNavDropdown">
@@ -268,58 +268,67 @@
       <h2>See the price before you send it.</h2>
       <p class="section-lede">Total price = base fare (covers the first 2 km) + distance beyond 2 km × the per‑kilometer rate for your tier.</p>
 
-      <div class="calc" id="calc">
-        <div class="calc-controls">
-          <fieldset class="tier-select" id="tierSelect">
-            <legend>Service tier</legend>
-            <label class="tier-pill" data-tier="express">
-              <input type="radio" name="tier" value="express" checked>
-              <span>Express</span>
-            </label>
-            <label class="tier-pill" data-tier="standard">
-              <input type="radio" name="tier" value="standard">
-              <span>Standard</span>
-            </label>
-            <label class="tier-pill" data-tier="secure">
-              <input type="radio" name="tier" value="secure">
-              <span>Secure</span>
-            </label>
-            <label class="tier-pill" data-tier="cargo">
-              <input type="radio" name="tier" value="cargo">
-              <span>Cargo</span>
-            </label>
-          </fieldset>
-
-          <div class="distance-control">
-            <div class="distance-label">
-              <label for="distanceRange">Distance</label>
-              <output id="distanceValue" for="distanceRange">5 km</output>
-            </div>
-            <input type="range" id="distanceRange" min="1" max="35" value="5" step="1">
-          </div>
-        </div>
-
-        <div class="calc-result">
-          <p class="calc-result-label">Estimated price</p>
-          <p class="calc-total"><span id="calcTotal">135</span><span class="calc-currency">birr</span></p>
-          <p class="calc-breakdown" id="calcBreakdown">60 birr base + 5 km × 15 birr</p>
-          <p class="calc-savings" id="calcSavings"></p>
+      <div id="calculatorLocked" class="calc-locked" hidden>
+        <p>Log in to see live pricing — as a sender, courier, or admin.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="sender-login.html">Log in / create an account</a>
         </div>
       </div>
 
-      <div class="table-scroll">
-        <table class="pricing-table">
-          <caption>Reference pricing grid — all four tiers</caption>
-          <thead>
-            <tr><th scope="col">Tier</th><th scope="col">Transport</th><th scope="col">Base fare (first 2&nbsp;km)</th><th scope="col">Per km beyond 2&nbsp;km</th><th scope="col">Example: 7&nbsp;km</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">Express</th><td>Foot / taxi / train</td><td>60 birr</td><td>15 birr</td><td>135 birr</td></tr>
-            <tr><th scope="row">Standard</th><td>Bicycle / motor scooter</td><td>80 birr</td><td>15 birr</td><td>155 birr</td></tr>
-            <tr><th scope="row">Secure</th><td>Selected courier / car</td><td>180 birr</td><td>25 birr</td><td>305 birr</td></tr>
-            <tr><th scope="row">Cargo</th><td>Suzuki / Isuzu</td><td>600 birr</td><td>80 birr</td><td>1,000 birr</td></tr>
-          </tbody>
-        </table>
+      <div id="calculatorUnlocked">
+        <div class="calc" id="calc">
+          <div class="calc-controls">
+            <fieldset class="tier-select" id="tierSelect">
+              <legend>Service tier</legend>
+              <label class="tier-pill" data-tier="express">
+                <input type="radio" name="tier" value="express" checked>
+                <span>Express</span>
+              </label>
+              <label class="tier-pill" data-tier="standard">
+                <input type="radio" name="tier" value="standard">
+                <span>Standard</span>
+              </label>
+              <label class="tier-pill" data-tier="secure">
+                <input type="radio" name="tier" value="secure">
+                <span>Secure</span>
+              </label>
+              <label class="tier-pill" data-tier="cargo">
+                <input type="radio" name="tier" value="cargo">
+                <span>Cargo</span>
+              </label>
+            </fieldset>
+
+            <div class="distance-control">
+              <div class="distance-label">
+                <label for="distanceRange">Distance</label>
+                <output id="distanceValue" for="distanceRange">5 km</output>
+              </div>
+              <input type="range" id="distanceRange" min="1" max="35" value="5" step="1">
+            </div>
+          </div>
+
+          <div class="calc-result">
+            <p class="calc-result-label">Estimated price</p>
+            <p class="calc-total"><span id="calcTotal">135</span><span class="calc-currency">birr</span></p>
+            <p class="calc-breakdown" id="calcBreakdown">60 birr base + 5 km × 15 birr</p>
+            <p class="calc-savings" id="calcSavings"></p>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="pricing-table">
+            <caption>Reference pricing grid — all four tiers</caption>
+            <thead>
+              <tr><th scope="col">Tier</th><th scope="col">Transport</th><th scope="col">Base fare (first 2&nbsp;km)</th><th scope="col">Per km beyond 2&nbsp;km</th><th scope="col">Example: 7&nbsp;km</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Express</th><td>Foot / taxi / train</td><td>60 birr</td><td>15 birr</td><td>135 birr</td></tr>
+              <tr><th scope="row">Standard</th><td>Bicycle / motor scooter</td><td>80 birr</td><td>15 birr</td><td>155 birr</td></tr>
+              <tr><th scope="row">Secure</th><td>Selected courier / car</td><td>180 birr</td><td>25 birr</td><td>305 birr</td></tr>
+              <tr><th scope="row">Cargo</th><td>Suzuki / Isuzu</td><td>600 birr</td><td>80 birr</td><td>1,000 birr</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>

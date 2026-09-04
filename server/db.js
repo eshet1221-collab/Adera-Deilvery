@@ -86,6 +86,25 @@ function init() {
       expires_at  TEXT NOT NULL
     );
 
+    -- Sender (customer) accounts — a third, lightweight actor type, own
+    -- token space again. Unlike couriers.phone (left non-unique for
+    -- historical reasons), phone is a real UNIQUE constraint here since
+    -- this table has no legacy data to conflict with.
+    CREATE TABLE IF NOT EXISTS senders (
+      id            INTEGER PRIMARY KEY AUTOINCREMENT,
+      full_name     TEXT NOT NULL,
+      phone         TEXT NOT NULL UNIQUE,
+      password_hash TEXT NOT NULL,
+      created_at    TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS sender_sessions (
+      token       TEXT PRIMARY KEY,
+      sender_id   INTEGER NOT NULL REFERENCES senders(id),
+      created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+      expires_at  TEXT NOT NULL
+    );
+
     CREATE TABLE IF NOT EXISTS testimonials (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
       author_name TEXT NOT NULL,
@@ -118,6 +137,7 @@ function init() {
     CREATE INDEX IF NOT EXISTS idx_couriers_phone ON couriers(phone);
     CREATE INDEX IF NOT EXISTS idx_sessions_courier ON sessions(courier_id);
     CREATE INDEX IF NOT EXISTS idx_admin_sessions_admin ON admin_sessions(admin_id);
+    CREATE INDEX IF NOT EXISTS idx_sender_sessions_sender ON sender_sessions(sender_id);
     CREATE INDEX IF NOT EXISTS idx_wallet_tx_courier ON wallet_transactions(courier_id);
     CREATE INDEX IF NOT EXISTS idx_wallet_tx_order ON wallet_transactions(order_id);
   `);
