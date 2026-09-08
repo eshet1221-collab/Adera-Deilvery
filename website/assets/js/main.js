@@ -98,6 +98,20 @@
     calculatorUnlocked.hidden = !isLoggedIn;
   }
 
+  /* ---------- "The problem" — admin-only ---------- */
+  // Unlike Live pricing above (any of admin/courier/sender unlocks it),
+  // this section requires the admin account specifically (username +
+  // password) — a courier or sender token doesn't satisfy this gate. Only
+  // index.html carries problemLocked/problemUnlocked, so this is a no-op
+  // everywhere else.
+  const problemLocked = document.getElementById("problemLocked");
+  const problemUnlocked = document.getElementById("problemUnlocked");
+  const isAdmin = Boolean(localStorage.getItem("loyal-admin-token"));
+  if (problemLocked && problemUnlocked) {
+    problemLocked.hidden = isAdmin;
+    problemUnlocked.hidden = !isAdmin;
+  }
+
   function currentTierKey() {
     const checked = document.querySelector('#tierSelect input[name="tier"]:checked');
     return checked ? checked.value : "express";
