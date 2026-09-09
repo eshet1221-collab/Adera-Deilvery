@@ -31,10 +31,11 @@
   // — separate from the page-specific admin/courier logout buttons that
   // already exist on the gated admin/courier pages themselves.
   (() => {
-    const statusEl = document.getElementById("loginStatus");
+    const statusIn = document.getElementById("loginStatusIn");
+    const statusOut = document.getElementById("loginStatusOut");
     const textEl = document.getElementById("loginStatusText");
     const logoutBtn = document.getElementById("loginStatusLogout");
-    if (!statusEl) return;
+    if (!statusIn) return;
 
     const accounts = [
       { token: "loyal-admin-token", name: "loyal-admin-username", label: "Admin", logoutUrl: "/api/admin/auth/logout" },
@@ -42,11 +43,16 @@
       { token: "loyal-sender-token", name: "loyal-sender-name", label: "Sender", logoutUrl: "/api/senders/auth/logout" },
     ];
     const active = accounts.find((a) => localStorage.getItem(a.token));
+
+    // Not logged in (or no valid token found): show the "Log in" link,
+    // keep the logged-in state hidden — this is the default markup state,
+    // so nothing else to do.
     if (!active) return;
 
+    statusIn.hidden = true;
+    statusOut.hidden = false;
     const name = localStorage.getItem(active.name) || active.label;
     textEl.textContent = `Logged in as ${active.label}: ${name}`;
-    statusEl.hidden = false;
 
     logoutBtn.addEventListener("click", async () => {
       const token = localStorage.getItem(active.token);
