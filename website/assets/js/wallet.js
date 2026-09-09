@@ -11,7 +11,6 @@
   const walletStatus = document.getElementById("walletStatus");
   const suspendedBanner = document.getElementById("suspendedBanner");
   const walletTxBody = document.getElementById("walletTxBody");
-  const logoutBtn = document.getElementById("logoutBtn");
 
   const topupForm = document.getElementById("topupForm");
   const topupAmount = document.getElementById("topupAmount");
@@ -119,16 +118,8 @@
     }
   });
 
-  logoutBtn.addEventListener("click", async () => {
-    try {
-      await authedFetch("/api/auth/logout", { method: "POST" });
-    } catch (err) {
-      // already redirected on 401; otherwise just proceed to clear locally
-    }
-    localStorage.removeItem("loyal-token");
-    localStorage.removeItem("loyal-courier-name");
-    window.location.href = "login.html";
-  });
+  // Logging out is now handled by the shared header login-status indicator
+  // (main.js) — no page-specific logout button here anymore.
 
   document.getElementById("refreshWallet").addEventListener("click", loadWallet);
 

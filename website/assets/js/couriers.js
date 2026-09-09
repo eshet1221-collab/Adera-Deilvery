@@ -7,21 +7,8 @@
   // isn't present, the roster area shows a "log in as admin" prompt instead
   // while the register button/dialog stays fully usable regardless.
   const adminToken = localStorage.getItem("loyal-admin-token");
-
-  const adminLogoutBtn = document.getElementById("adminLogout");
-  if (adminToken) {
-    adminLogoutBtn.hidden = false;
-    adminLogoutBtn.addEventListener("click", async () => {
-      try {
-        await fetch("/api/admin/auth/logout", { method: "POST", headers: { Authorization: `Bearer ${adminToken}` } });
-      } catch {
-        // ignore — clear + redirect below regardless
-      }
-      localStorage.removeItem("loyal-admin-token");
-      localStorage.removeItem("loyal-admin-username");
-      window.location.href = "admin-login.html";
-    });
-  }
+  // Logging out is now handled by the shared header login-status indicator
+  // (main.js) — no page-specific logout button here anymore.
 
   const couriersBody = document.getElementById("couriersBody");
   const courierSearch = document.getElementById("courierSearch");

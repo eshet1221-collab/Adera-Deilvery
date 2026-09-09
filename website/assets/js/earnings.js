@@ -27,16 +27,8 @@
     return data;
   }
 
-  document.getElementById("adminLogout")?.addEventListener("click", async () => {
-    try {
-      await fetch("/api/admin/auth/logout", { method: "POST", headers: { Authorization: `Bearer ${adminToken}` } });
-    } catch {
-      // ignore — clear + redirect below regardless
-    }
-    localStorage.removeItem("loyal-admin-token");
-    localStorage.removeItem("loyal-admin-username");
-    window.location.href = "admin-login.html";
-  });
+  // Logging out is now handled by the shared header login-status indicator
+  // (main.js) — no page-specific logout button here anymore.
 
   // GET /api/couriers/stats is the admin-side full roster view (see
   // server/routes/couriers.js, requireAdminAuth). A courier's own login only

@@ -78,16 +78,8 @@
     return data;
   }
 
-  document.getElementById("adminLogout")?.addEventListener("click", async () => {
-    try {
-      await fetchJson("/api/admin/auth/logout", { method: "POST" });
-    } catch {
-      // ignore — clear + redirect below regardless
-    }
-    localStorage.removeItem("loyal-admin-token");
-    localStorage.removeItem("loyal-admin-username");
-    window.location.href = "admin-login.html";
-  });
+  // Logging out is now handled by the shared header login-status indicator
+  // (main.js) — no page-specific logout button here anymore.
 
   /* ---------- orders: search + filter + pagination ---------- */
   async function loadOrders() {
