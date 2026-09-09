@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wallet — Loyal Delivery Movers</title>
-<meta name="description" content="Loyal Delivery Movers courier wallet — balance, transaction history, and top-up.">
+<title>About — Loyal Delivery Movers</title>
+<meta name="description" content="About Loyal Delivery Movers — a crowdsourced urban logistics platform for Addis Ababa.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b6e4f'/%3E%3Cpath d='M50 22 L77 37 L77 67 L50 82 L23 67 L23 37 Z' fill='none' stroke='%23fcfcfb' stroke-width='6.5' stroke-linejoin='round'/%3E%3Cpath d='M23 37 L50 52 L77 37 M50 52 L50 82' stroke='%23fcfcfb' stroke-width='6.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M39 51 L47 59 L64 40' stroke='%23fcfcfb' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='64' cy='40' r='4.5' fill='%23fcfcfb'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -24,7 +24,7 @@
       <a href="index.html#solution">4 levels</a>
       <a href="index.html#calculator">Pricing</a>
       <a href="index.html#security">Security</a>
-      <div class="nav-dropdown is-active" id="courierNavDropdown">
+      <div class="nav-dropdown" id="courierNavDropdown">
         <button class="nav-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
           Courier
           <svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
@@ -32,7 +32,7 @@
         <div class="nav-dropdown-menu">
       <a href="dashboard.html">Members</a>
       <a href="deliveries.html">My Deliveries</a>
-      <a href="wallet.html" class="is-active">Wallet</a>
+      <a href="wallet.html">Wallet</a>
         </div>
       </div>
       <div class="nav-dropdown" id="supportNavDropdown">
@@ -41,7 +41,7 @@
           <svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="nav-dropdown-menu">
-      <a href="about.html">About</a>
+      <a href="about.html" class="is-active">About</a>
       <a href="track.html">Track order</a>
       <a href="call.html">Call</a>
       <a href="contact.html">Contact</a>
@@ -78,72 +78,46 @@
 
 <main id="main">
   <section class="section page-hero">
-    <div class="wrap dash-head">
-      <div>
-        <p class="kicker">Members</p>
-        <h1 class="page-title">Wallet</h1>
-        <p class="section-lede">Your courier wallet. Prepaid deliveries credit you 82% of the price once the recipient confirms with their code. Cash-on-Delivery deliveries debit the 18% commission you owe, since you already collected the full amount in person.</p>
-      </div>
-      <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">Log out</button>
+    <div class="wrap">
+      <p class="kicker">About us</p>
+      <h1 class="page-title">Built for how Addis Ababa actually moves.</h1>
+      <p class="section-lede">Loyal Delivery Movers turns the commutes already happening across the city into a delivery network — matching parcels, documents, and cargo with pedestrians, cyclists, and drivers already heading that way.</p>
     </div>
   </section>
 
-  <p class="form-error" id="suspendedBanner" role="alert" hidden style="margin: -12px auto 0; max-width: 1160px; padding-left: 24px; padding-right: 24px;">Your wallet is suspended — a Cash-on-Delivery commission debit took your balance below zero. Top up below to reactivate your account and accept new orders.</p>
-
   <section class="section section-tint">
     <div class="wrap">
-      <div class="stat-grid" id="walletStatsGrid" style="grid-template-columns: repeat(2, 1fr); max-width: 480px;">
-        <div class="stat-tile"><strong id="walletBalance">—</strong><span>Current balance</span></div>
-        <div class="stat-tile"><strong id="walletStatus">—</strong><span>Account status</span></div>
+      <div class="card-grid">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>
+          </div>
+          <h3>Our mission</h3>
+          <p>Make sending something across Addis Ababa affordable and reliable for everyone — not just those who can pay premium courier rates — by putting the city's existing foot and vehicle traffic to work.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <h3>How we work</h3>
+          <p>No fleet, no warehouses. Every delivery is carried by someone already going that way, matched by route and verified at every handoff — so the cost stays low without cutting corners on trust.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Who it's for</h3>
+          <p>Small traders and online sellers who need affordable delivery, everyday commuters who want to earn on a route they already travel, and anyone who just needs something to get across town.</p>
+        </article>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="admin-head">
-        <h2>Top up</h2>
-      </div>
-      <form class="form-card" id="topupForm" novalidate style="max-width: 480px;">
-        <p class="form-note">Pay the amount you want to add via Telebirr, CBE Birr, or Chapa to the Loyal Delivery Movers merchant account, then enter the transaction reference below. Your balance updates immediately — no live payment gateway is wired up yet, so this is a manual reference-entry step, same as the sender's "Pay Now" flow.</p>
-        <div class="form-grid">
-          <div class="form-row">
-            <label for="topupAmount">Amount (birr)</label>
-            <input type="number" id="topupAmount" min="1" max="1000000" step="1" required>
-          </div>
-          <div class="form-row">
-            <label for="topupReference">Transaction reference</label>
-            <input type="text" id="topupReference" required>
-          </div>
-        </div>
-        <p class="form-error" id="topupError" role="alert" hidden></p>
-        <button type="submit" class="btn btn-primary" id="topupSubmit">Top up</button>
-      </form>
-    </div>
-  </section>
-
-  <section class="section section-tint">
-    <div class="wrap">
-      <div class="admin-head">
-        <h2>Transaction history</h2>
-        <button class="btn btn-ghost btn-sm" id="refreshWallet" type="button">Refresh</button>
-      </div>
-      <div class="table-scroll">
-        <table class="pricing-table admin-table">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Type</th>
-              <th scope="col">Order</th>
-              <th scope="col">Amount</th>
-              <th scope="col">Balance after</th>
-            </tr>
-          </thead>
-          <tbody id="walletTxBody">
-            <tr><td colspan="5" class="empty-state">Loading…</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <p class="kicker">Get in touch</p>
+      <h2>Questions, partnerships, or press?</h2>
+      <p class="section-lede">Reach the team on the <a href="contact.html">Contact page</a>, or see what people are already saying on <a href="testimonials.html">Testimonials</a>.</p>
     </div>
   </section>
 </main>
@@ -165,8 +139,8 @@
       <a href="index.html#security">Security</a>
       <a href="index.html#roadmap">Roadmap</a>
       <a href="order.html">Send</a>
-      <a href="about.html">About</a>
       <a href="track.html">Track</a>
+      <a href="about.html">About</a>
       <a href="index.html#problem">Problem</a>
       <a href="admin.html">Admin</a>
       <a href="couriers.html">Couriers</a>
@@ -184,6 +158,5 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script src="assets/js/wallet.js"></script>
 </body>
 </html>
