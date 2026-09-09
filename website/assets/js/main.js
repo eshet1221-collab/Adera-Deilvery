@@ -81,45 +81,36 @@
   const calcBreakdown = document.getElementById("calcBreakdown");
   const calcSavings = document.getElementById("calcSavings");
   const tierInputs = document.querySelectorAll('#tierSelect input[name="tier"]');
-  const calculatorLocked = document.getElementById("calculatorLocked");
-  const calculatorUnlocked = document.getElementById("calculatorUnlocked");
 
-  // "Live pricing" on the homepage is gated to logged-in users — any of the
-  // three account types (admin, courier, or a sender account) unlocks it.
-  // Only index.html carries calculatorLocked/calculatorUnlocked, so this is
-  // a no-op everywhere else.
+  /* ---------- homepage section gates ---------- */
+  // Only index.html carries these locked/unlocked element pairs, so this is
+  // a no-op (getElementById returns null) on every other page.
+  function applyGate(baseId, unlockedFor) {
+    const locked = document.getElementById(`${baseId}Locked`);
+    const unlocked = document.getElementById(`${baseId}Unlocked`);
+    if (!locked || !unlocked) return;
+    locked.hidden = unlockedFor;
+    unlocked.hidden = !unlockedFor;
+  }
+
+  // Any of the three account types (admin, courier, or a sender account)
+  // unlocks these — "Live pricing", "The solution" (4 levels), "How it
+  // works", "Market & impact", and "Business model".
   const isLoggedIn = Boolean(
     localStorage.getItem("loyal-admin-token") ||
       localStorage.getItem("loyal-token") ||
       localStorage.getItem("loyal-sender-token")
   );
-  if (calculatorLocked && calculatorUnlocked) {
-    calculatorLocked.hidden = isLoggedIn;
-    calculatorUnlocked.hidden = !isLoggedIn;
-  }
+  applyGate("calculator", isLoggedIn);
+  applyGate("solution", isLoggedIn);
+  applyGate("how", isLoggedIn);
+  applyGate("impact", isLoggedIn);
+  applyGate("business", isLoggedIn);
 
-  // "The solution" (4 levels) uses the same any-account gate as Live
-  // pricing above.
-  const solutionLocked = document.getElementById("solutionLocked");
-  const solutionUnlocked = document.getElementById("solutionUnlocked");
-  if (solutionLocked && solutionUnlocked) {
-    solutionLocked.hidden = isLoggedIn;
-    solutionUnlocked.hidden = !isLoggedIn;
-  }
-
-  /* ---------- "The problem" — admin-only ---------- */
-  // Unlike Live pricing above (any of admin/courier/sender unlocks it),
-  // this section requires the admin account specifically (username +
-  // password) — a courier or sender token doesn't satisfy this gate. Only
-  // index.html carries problemLocked/problemUnlocked, so this is a no-op
-  // everywhere else.
-  const problemLocked = document.getElementById("problemLocked");
-  const problemUnlocked = document.getElementById("problemUnlocked");
+  // "The problem" requires the admin account specifically (username +
+  // password) — a courier or sender token doesn't satisfy this gate.
   const isAdmin = Boolean(localStorage.getItem("loyal-admin-token"));
-  if (problemLocked && problemUnlocked) {
-    problemLocked.hidden = isAdmin;
-    problemUnlocked.hidden = !isAdmin;
-  }
+  applyGate("problem", isAdmin);
 
   function currentTierKey() {
     const checked = document.querySelector('#tierSelect input[name="tier"]:checked');

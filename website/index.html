@@ -250,28 +250,37 @@
       <p class="kicker">How it works</p>
       <h2>Three taps to ship. Three taps to earn.</h2>
 
-      <div class="how-grid">
-        <div class="how-col">
-          <h3 class="how-title">Sending something</h3>
-          <ol class="steps">
-            <li><span class="step-num">1</span><div><strong>Choose your tier</strong><p>Pick Express, Standard, Secure or Cargo based on what you're sending and how fast it needs to move.</p></div></li>
-            <li><span class="step-num">2</span><div><strong>Drop a pin or a landmark</strong><p>Search by map, or use a known landmark like "CMC" or "down from the Bole taxi rank" — built for how Addis actually gives directions.</p></div></li>
-            <li><span class="step-num">3</span><div><strong>Track and confirm</strong><p>Watch your courier live on the map, then confirm delivery with the 4‑digit code sent straight to the recipient.</p></div></li>
-          </ol>
-        </div>
-        <div class="how-col" id="courier">
-          <h3 class="how-title">Earning as a courier</h3>
-          <ol class="steps">
-            <li><span class="step-num">1</span><div><strong>Verify once</strong><p>Register with your Fayda national digital ID and a live selfie check — no vehicle, no upfront capital required.</p></div></li>
-            <li><span class="step-num">2</span><div><strong>Set your route</strong><p>Tell the app where you're headed — home from campus, work to Bole — and it only shows orders on your way.</p></div></li>
-            <li><span class="step-num">3</span><div><strong>Get paid instantly</strong><p>Snap proof of pickup and drop‑off, and your share lands in your in‑app wallet — cash out to Telebirr or your bank anytime.</p></div></li>
-          </ol>
+      <div id="howLocked" class="calc-locked" hidden>
+        <p>Log in to see how it works — as a sender, courier, or admin.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="sender-login.html">Log in / create an account</a>
         </div>
       </div>
 
-      <div class="callout">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        <p>No smartphone or app? Order the same way through the free <strong>Telegram bot</strong> or the <strong>call center</strong> — built for every part of the city, not just the ones with fast internet.</p>
+      <div id="howUnlocked">
+        <div class="how-grid">
+          <div class="how-col">
+            <h3 class="how-title">Sending something</h3>
+            <ol class="steps">
+              <li><span class="step-num">1</span><div><strong>Choose your tier</strong><p>Pick Express, Standard, Secure or Cargo based on what you're sending and how fast it needs to move.</p></div></li>
+              <li><span class="step-num">2</span><div><strong>Drop a pin or a landmark</strong><p>Search by map, or use a known landmark like "CMC" or "down from the Bole taxi rank" — built for how Addis actually gives directions.</p></div></li>
+              <li><span class="step-num">3</span><div><strong>Track and confirm</strong><p>Watch your courier live on the map, then confirm delivery with the 4‑digit code sent straight to the recipient.</p></div></li>
+            </ol>
+          </div>
+          <div class="how-col" id="courier">
+            <h3 class="how-title">Earning as a courier</h3>
+            <ol class="steps">
+              <li><span class="step-num">1</span><div><strong>Verify once</strong><p>Register with your Fayda national digital ID and a live selfie check — no vehicle, no upfront capital required.</p></div></li>
+              <li><span class="step-num">2</span><div><strong>Set your route</strong><p>Tell the app where you're headed — home from campus, work to Bole — and it only shows orders on your way.</p></div></li>
+              <li><span class="step-num">3</span><div><strong>Get paid instantly</strong><p>Snap proof of pickup and drop‑off, and your share lands in your in‑app wallet — cash out to Telebirr or your bank anytime.</p></div></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="callout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <p>No smartphone or app? Order the same way through the free <strong>Telegram bot</strong> or the <strong>call center</strong> — built for every part of the city, not just the ones with fast internet.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -390,49 +399,58 @@
       <p class="kicker">Market &amp; impact</p>
       <h2>A large, underserved market — and a social dividend on top.</h2>
 
-      <div class="stat-grid">
-        <div class="stat-tile"><strong>100,000+</strong><span>small deliveries happen across Addis Ababa every day</span></div>
-        <div class="stat-tile"><strong>50,000+</strong><span>of those are our addressable segment — vendors, offices, pharmacies, individuals</span></div>
-        <div class="stat-tile"><strong>60–70%</strong><span>lower delivery cost for small traders and households</span></div>
-        <div class="stat-tile"><strong>5,000+</strong><span>couriers targeted as active earners by end of Year 1</span></div>
-        <div class="stat-tile"><strong>850,000 birr</strong><span>total capital required — no fleet, no warehouses</span></div>
-        <div class="stat-tile"><strong>2.09B birr</strong><span>projected direct payouts to couriers over five years</span></div>
+      <div id="impactLocked" class="calc-locked" hidden>
+        <p>Log in to see market and impact figures — as a sender, courier, or admin.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="sender-login.html">Log in / create an account</a>
+        </div>
       </div>
 
-      <div class="chart-grid">
-        <figure class="chart-card">
-          <figcaption>
-            <h3>Daily orders, Year 1 → Year 5</h3>
-            <p>Projected order volume as the platform scales across Addis Ababa and neighboring cities.</p>
-          </figcaption>
-          <div class="bar-chart" data-unit="orders/day">
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:5"><span class="bar-value">1,200</span></div></div><span class="bar-label">Year 1</span></div>
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:14"><span class="bar-value">3,500</span></div></div><span class="bar-label">Year 2</span></div>
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:32"><span class="bar-value">8,000</span></div></div><span class="bar-label">Year 3</span></div>
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:60"><span class="bar-value">15,000</span></div></div><span class="bar-label">Year 4</span></div>
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:100"><span class="bar-value">25,000</span></div></div><span class="bar-label">Year 5</span></div>
-          </div>
-        </figure>
+      <div id="impactUnlocked">
+        <div class="stat-grid">
+          <div class="stat-tile"><strong>100,000+</strong><span>small deliveries happen across Addis Ababa every day</span></div>
+          <div class="stat-tile"><strong>50,000+</strong><span>of those are our addressable segment — vendors, offices, pharmacies, individuals</span></div>
+          <div class="stat-tile"><strong>60–70%</strong><span>lower delivery cost for small traders and households</span></div>
+          <div class="stat-tile"><strong>5,000+</strong><span>couriers targeted as active earners by end of Year 1</span></div>
+          <div class="stat-tile"><strong>850,000 birr</strong><span>total capital required — no fleet, no warehouses</span></div>
+          <div class="stat-tile"><strong>2.09B birr</strong><span>projected direct payouts to couriers over five years</span></div>
+        </div>
 
-        <figure class="chart-card">
-          <figcaption>
-            <h3>Net profit, Year 1 → Year 5</h3>
-            <p>Million Ethiopian birr, after commission, tax and operating costs.</p>
-          </figcaption>
-          <div class="bar-chart" data-unit="million birr">
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:2"><span class="bar-value">4.4M</span></div></div><span class="bar-label">Year 1</span></div>
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:8"><span class="bar-value">19.3M</span></div></div><span class="bar-label">Year 2</span></div>
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:21"><span class="bar-value">54.3M</span></div></div><span class="bar-label">Year 3</span></div>
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:49"><span class="bar-value">125.6M</span></div></div><span class="bar-label">Year 4</span></div>
-            <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:100"><span class="bar-value">254.0M</span></div></div><span class="bar-label">Year 5</span></div>
-          </div>
-        </figure>
-      </div>
+        <div class="chart-grid">
+          <figure class="chart-card">
+            <figcaption>
+              <h3>Daily orders, Year 1 → Year 5</h3>
+              <p>Projected order volume as the platform scales across Addis Ababa and neighboring cities.</p>
+            </figcaption>
+            <div class="bar-chart" data-unit="orders/day">
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:5"><span class="bar-value">1,200</span></div></div><span class="bar-label">Year 1</span></div>
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:14"><span class="bar-value">3,500</span></div></div><span class="bar-label">Year 2</span></div>
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:32"><span class="bar-value">8,000</span></div></div><span class="bar-label">Year 3</span></div>
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:60"><span class="bar-value">15,000</span></div></div><span class="bar-label">Year 4</span></div>
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-blue" style="--v:100"><span class="bar-value">25,000</span></div></div><span class="bar-label">Year 5</span></div>
+            </div>
+          </figure>
 
-      <div class="metric-strip">
-        <div><strong>~2 months</strong><span>payback period on initial capital</span></div>
-        <div><strong>185%</strong><span>projected 5‑year IRR</span></div>
-        <div><strong>18%</strong><span>blended platform commission (12–20% by tier)</span></div>
+          <figure class="chart-card">
+            <figcaption>
+              <h3>Net profit, Year 1 → Year 5</h3>
+              <p>Million Ethiopian birr, after commission, tax and operating costs.</p>
+            </figcaption>
+            <div class="bar-chart" data-unit="million birr">
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:2"><span class="bar-value">4.4M</span></div></div><span class="bar-label">Year 1</span></div>
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:8"><span class="bar-value">19.3M</span></div></div><span class="bar-label">Year 2</span></div>
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:21"><span class="bar-value">54.3M</span></div></div><span class="bar-label">Year 3</span></div>
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:49"><span class="bar-value">125.6M</span></div></div><span class="bar-label">Year 4</span></div>
+              <div class="bar-row"><div class="bar-track"><div class="bar bar-orange" style="--v:100"><span class="bar-value">254.0M</span></div></div><span class="bar-label">Year 5</span></div>
+            </div>
+          </figure>
+        </div>
+
+        <div class="metric-strip">
+          <div><strong>~2 months</strong><span>payback period on initial capital</span></div>
+          <div><strong>185%</strong><span>projected 5‑year IRR</span></div>
+          <div><strong>18%</strong><span>blended platform commission (12–20% by tier)</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -443,7 +461,14 @@
       <p class="kicker">Business model</p>
       <h2>Asset‑light, commission‑based, and built to scale with the city.</h2>
 
-      <div class="card-grid three-col">
+      <div id="businessLocked" class="calc-locked" hidden>
+        <p>Log in to see the business model breakdown — as a sender, courier, or admin.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="sender-login.html">Log in / create an account</a>
+        </div>
+      </div>
+
+      <div id="businessUnlocked" class="card-grid three-col">
         <article class="card">
           <h3>Platform commission</h3>
           <p>12–20% of every completed delivery, scaled to risk and value:</p>
