@@ -95,7 +95,8 @@
 
   // Any of the three account types (admin, courier, or a sender account)
   // unlocks these — "Live pricing", "The solution" (4 levels), "How it
-  // works", "Market & impact", and "Business model".
+  // works", "Security & chain of custody", "Market & impact", and
+  // "Business model".
   const isLoggedIn = Boolean(
     localStorage.getItem("loyal-admin-token") ||
       localStorage.getItem("loyal-token") ||
@@ -104,6 +105,7 @@
   applyGate("calculator", isLoggedIn);
   applyGate("solution", isLoggedIn);
   applyGate("how", isLoggedIn);
+  applyGate("security", isLoggedIn);
   applyGate("impact", isLoggedIn);
   applyGate("business", isLoggedIn);
 
