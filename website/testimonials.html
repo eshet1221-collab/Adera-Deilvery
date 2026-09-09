@@ -97,51 +97,60 @@
   </section>
 
   <section class="section section-tint">
-    <div class="wrap testimonials-wrap">
-      <div>
-        <div class="admin-head">
-          <h2>Recent testimonials</h2>
-          <button class="btn btn-ghost btn-sm" id="refreshTestimonials" type="button">Refresh</button>
-        </div>
-        <div class="testimonial-list" id="testimonialList">
-          <p class="empty-state">Loading testimonials…</p>
+    <div class="wrap">
+      <div id="testimonialsLocked" class="calc-locked" hidden>
+        <p>Log in to read and leave testimonials — as a sender, courier, or admin.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="sender-login.html">Log in / create an account</a>
         </div>
       </div>
 
-      <form class="form-card" id="testimonialForm">
-        <h2 class="form-section-title">Leave a testimonial</h2>
-        <div class="form-row">
-          <label for="testName">Your name</label>
-          <input type="text" id="testName" required>
+      <div id="testimonialsUnlocked" class="testimonials-wrap">
+        <div>
+          <div class="admin-head">
+            <h2>Recent testimonials</h2>
+            <button class="btn btn-ghost btn-sm" id="refreshTestimonials" type="button">Refresh</button>
+          </div>
+          <div class="testimonial-list" id="testimonialList">
+            <p class="empty-state">Loading testimonials…</p>
+          </div>
         </div>
-        <div class="form-row">
-          <label for="testRole">I was the…</label>
-          <select id="testRole" required>
-            <option value="">Choose one</option>
-            <option value="sender">Sender</option>
-            <option value="receiver">Receiver</option>
-            <option value="courier">Courier</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="testRating">Rating <span class="optional">(optional)</span></label>
-          <select id="testRating">
-            <option value="">No rating</option>
-            <option value="5">★★★★★ (5)</option>
-            <option value="4">★★★★☆ (4)</option>
-            <option value="3">★★★☆☆ (3)</option>
-            <option value="2">★★☆☆☆ (2)</option>
-            <option value="1">★☆☆☆☆ (1)</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="testComment">Your comment</label>
-          <textarea id="testComment" rows="4" required></textarea>
-        </div>
-        <p class="form-error" id="testimonialError" role="alert" hidden></p>
-        <button type="submit" class="btn btn-primary btn-block">Submit testimonial</button>
-        <p class="form-note">Public and unmoderated in this prototype — a real deployment would review submissions before they appear.</p>
-      </form>
+
+        <form class="form-card" id="testimonialForm">
+          <h2 class="form-section-title">Leave a testimonial</h2>
+          <div class="form-row">
+            <label for="testName">Your name</label>
+            <input type="text" id="testName" required>
+          </div>
+          <div class="form-row">
+            <label for="testRole">I was the…</label>
+            <select id="testRole" required>
+              <option value="">Choose one</option>
+              <option value="sender">Sender</option>
+              <option value="receiver">Receiver</option>
+              <option value="courier">Courier</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="testRating">Rating <span class="optional">(optional)</span></label>
+            <select id="testRating">
+              <option value="">No rating</option>
+              <option value="5">★★★★★ (5)</option>
+              <option value="4">★★★★☆ (4)</option>
+              <option value="3">★★★☆☆ (3)</option>
+              <option value="2">★★☆☆☆ (2)</option>
+              <option value="1">★☆☆☆☆ (1)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="testComment">Your comment</label>
+            <textarea id="testComment" rows="4" required></textarea>
+          </div>
+          <p class="form-error" id="testimonialError" role="alert" hidden></p>
+          <button type="submit" class="btn btn-primary btn-block">Submit testimonial</button>
+          <p class="form-note">Public and unmoderated in this prototype — a real deployment would review submissions before they appear.</p>
+        </form>
+      </div>
     </div>
   </section>
 </main>

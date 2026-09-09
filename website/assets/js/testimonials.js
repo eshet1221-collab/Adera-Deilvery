@@ -1,6 +1,19 @@
 (() => {
   "use strict";
 
+  // Gated behind any of the three account types, same as the homepage
+  // content sections — testimonials.js only runs its normal logic once
+  // logged in; otherwise the page shows testimonialsLocked instead (see
+  // testimonials.html) and this file stops here.
+  const isLoggedIn = Boolean(
+    localStorage.getItem("loyal-admin-token") ||
+      localStorage.getItem("loyal-token") ||
+      localStorage.getItem("loyal-sender-token")
+  );
+  document.getElementById("testimonialsLocked").hidden = isLoggedIn;
+  document.getElementById("testimonialsUnlocked").hidden = !isLoggedIn;
+  if (!isLoggedIn) return;
+
   const listEl = document.getElementById("testimonialList");
   const form = document.getElementById("testimonialForm");
   const errorEl = document.getElementById("testimonialError");
