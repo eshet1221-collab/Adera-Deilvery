@@ -74,7 +74,6 @@
   // hidden (not deleted) in .nav-hidden-group. Capacitor injects
   // window.Capacitor into the page even when it's loaded from a remote
   // server.url, so this is a reliable way to tell native app from browser.
-  console.log("CAP_CHECK", !!window.Capacitor, window.Capacitor?.isNativePlatform?.(), document.querySelectorAll(".nav-hidden-group").length);
   if (window.Capacitor?.isNativePlatform?.()) {
     document.querySelectorAll(".nav-hidden-group").forEach((el) => {
       el.hidden = false;
