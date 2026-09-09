@@ -1,5 +1,0 @@
-package com.loyaldeliverymovers.app;
-
-import com.getcapacitor.BridgeActivity;
-
-public class MainActivity extends BridgeActivity {}

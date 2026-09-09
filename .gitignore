@@ -1,2 +1,6 @@
 # Local Claude Code tool config — not part of the application
 .claude/
+
+# The Android app is its own separate repo now:
+# https://github.com/eshet1221-collab/LoyalDeliveryMovers---Android
+android-app/

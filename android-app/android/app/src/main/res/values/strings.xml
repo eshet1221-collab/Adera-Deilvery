@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Loyal Delivery Movers</string>
-    <string name="title_activity_main">Loyal Delivery Movers</string>
-    <string name="package_name">com.loyaldeliverymovers.app</string>
-    <string name="custom_url_scheme">com.loyaldeliverymovers.app</string>
-</resources>
