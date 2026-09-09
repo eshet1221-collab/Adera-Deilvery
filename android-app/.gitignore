@@ -1,0 +1,6 @@
+# Capacitor's required web asset dir — this app loads the live site via
+# capacitor.config.json's server.url instead, so this is just placeholder
+# build output, not source. The real frontend lives in ../website.
+www/
+
+node_modules/
