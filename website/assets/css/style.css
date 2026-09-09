@@ -84,6 +84,10 @@
 /* ---------- reset ---------- */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+/* Without !important, a same-specificity class rule further down the
+   sheet (e.g. .tier-grid, .flow { display: grid/flex }) wins the cascade
+   over this and the [hidden] attribute silently stops hiding anything. */
+[hidden] { display: none !important; }
 body {
   margin: 0;
   font-family: var(--font);

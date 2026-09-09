@@ -148,6 +148,7 @@
   applyGate("how", isLoggedIn);
   applyGate("security", isLoggedIn);
   applyGate("impact", isLoggedIn);
+  applyGate("roadmap", isLoggedIn);
 
   // "The problem" requires the admin account specifically (username +
   // password) — a courier or sender token doesn't satisfy this gate.
