@@ -67,6 +67,20 @@
     });
   })();
 
+  /* ---------- full nav inside the Android app ---------- */
+  // The public website shows a trimmed Home/About/Service/Contact menu, but
+  // the Android app (Capacitor) wraps this same site and needs the full
+  // menu — Learn more/Courier/Support/Admin dropdowns plus "Send" — that's
+  // hidden (not deleted) in .nav-hidden-group. Capacitor injects
+  // window.Capacitor into the page even when it's loaded from a remote
+  // server.url, so this is a reliable way to tell native app from browser.
+  console.log("CAP_CHECK", !!window.Capacitor, window.Capacitor?.isNativePlatform?.(), document.querySelectorAll(".nav-hidden-group").length);
+  if (window.Capacitor?.isNativePlatform?.()) {
+    document.querySelectorAll(".nav-hidden-group").forEach((el) => {
+      el.hidden = false;
+    });
+  }
+
   /* ---------- mobile nav ---------- */
   const navToggle = document.getElementById("navToggle");
   const mainNav = document.getElementById("mainNav");
@@ -125,35 +139,35 @@
   const tierInputs = document.querySelectorAll('#tierSelect input[name="tier"]');
 
   /* ---------- homepage section gates ---------- */
-  // Only index.html carries these locked/unlocked element pairs, so this is
-  // a no-op (getElementById returns null) on every other page.
-  function applyGate(baseId, unlockedFor) {
-    const locked = document.getElementById(`${baseId}Locked`);
-    const unlocked = document.getElementById(`${baseId}Unlocked`);
-    if (!locked || !unlocked) return;
-    locked.hidden = unlockedFor;
-    unlocked.hidden = !unlockedFor;
+  // Only index.html carries these ids, so this is a no-op (getElementById
+  // returns null) on every other page. These sections hold confidential
+  // business detail (pricing, security ops, market financials, roadmap) —
+  // they're entirely absent for a logged-out visitor, not just teased
+  // behind a "log in to see this" banner.
+  function gate(id, show) {
+    const el = document.getElementById(id);
+    if (el) el.hidden = !show;
   }
 
   // Any of the three account types (admin, courier, or a sender account)
-  // unlocks these — "Live pricing", "The solution" (4 levels), "How it
-  // works", "Security & chain of custody", and "Market & impact".
+  // unlocks these — "Live pricing", the detailed tier/pricing breakdown,
+  // "How it works", "Security & chain of custody", and "Market & impact".
   const isLoggedIn = Boolean(
     localStorage.getItem("loyal-admin-token") ||
       localStorage.getItem("loyal-token") ||
       localStorage.getItem("loyal-sender-token")
   );
-  applyGate("calculator", isLoggedIn);
-  applyGate("solution", isLoggedIn);
-  applyGate("how", isLoggedIn);
-  applyGate("security", isLoggedIn);
-  applyGate("impact", isLoggedIn);
-  applyGate("roadmap", isLoggedIn);
+  gate("solutionDetail", isLoggedIn);
+  gate("how", isLoggedIn);
+  gate("calculator", isLoggedIn);
+  gate("security", isLoggedIn);
+  gate("impact", isLoggedIn);
+  gate("roadmap", isLoggedIn);
 
   // "The problem" requires the admin account specifically (username +
   // password) — a courier or sender token doesn't satisfy this gate.
   const isAdmin = Boolean(localStorage.getItem("loyal-admin-token"));
-  applyGate("problem", isAdmin);
+  gate("problem", isAdmin);
 
   function currentTierKey() {
     const checked = document.querySelector('#tierSelect input[name="tier"]:checked');
