@@ -25,6 +25,42 @@
     localStorage.setItem(THEME_KEY, next);
   });
 
+  /* ---------- login status indicator (every page) ---------- */
+  // Shows which of the three account types (if any) is currently logged in,
+  // right in the header, so it's never ambiguous whether a login is active
+  // — separate from the page-specific admin/courier logout buttons that
+  // already exist on the gated admin/courier pages themselves.
+  (() => {
+    const statusEl = document.getElementById("loginStatus");
+    const textEl = document.getElementById("loginStatusText");
+    const logoutBtn = document.getElementById("loginStatusLogout");
+    if (!statusEl) return;
+
+    const accounts = [
+      { token: "loyal-admin-token", name: "loyal-admin-username", label: "Admin", logoutUrl: "/api/admin/auth/logout" },
+      { token: "loyal-token", name: "loyal-courier-name", label: "Courier", logoutUrl: "/api/auth/logout" },
+      { token: "loyal-sender-token", name: "loyal-sender-name", label: "Sender", logoutUrl: "/api/senders/auth/logout" },
+    ];
+    const active = accounts.find((a) => localStorage.getItem(a.token));
+    if (!active) return;
+
+    const name = localStorage.getItem(active.name) || active.label;
+    textEl.textContent = `Logged in as ${active.label}: ${name}`;
+    statusEl.hidden = false;
+
+    logoutBtn.addEventListener("click", async () => {
+      const token = localStorage.getItem(active.token);
+      try {
+        await fetch(active.logoutUrl, { method: "POST", headers: { Authorization: `Bearer ${token}` } });
+      } catch {
+        // ignore — clear + reload below regardless
+      }
+      localStorage.removeItem(active.token);
+      localStorage.removeItem(active.name);
+      window.location.reload();
+    });
+  })();
+
   /* ---------- mobile nav ---------- */
   const navToggle = document.getElementById("navToggle");
   const mainNav = document.getElementById("mainNav");
