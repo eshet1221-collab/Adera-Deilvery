@@ -21,6 +21,7 @@
     </a>
 
     <nav class="main-nav" id="mainNav" aria-label="Primary">
+      <a href="about.html">About</a>
       <a href="index.html#solution">4 levels</a>
       <a href="index.html#calculator">Pricing</a>
       <a href="index.html#security">Security</a>
@@ -41,7 +42,6 @@
           <svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="nav-dropdown-menu">
-      <a href="about.html">About</a>
       <a href="track.html">Track order</a>
       <a href="call.html">Call</a>
       <a href="contact.html">Contact</a>
@@ -161,7 +161,14 @@
       <h2>One route‑matching engine. Four purpose‑built tiers.</h2>
       <p class="section-lede">Every order is priced and routed by what it is, not treated the same as everything else — from a forgotten key to a full office relocation.</p>
 
-      <div class="tier-grid">
+      <div id="solutionLocked" class="calc-locked" hidden>
+        <p>Log in to see the 4 service levels — as a sender, courier, or admin.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="sender-login.html">Log in / create an account</a>
+        </div>
+      </div>
+
+      <div id="solutionUnlocked" class="tier-grid">
         <article class="tier-card" style="--tier-color:var(--series-1)">
           <div class="tier-head">
             <span class="tier-icon" aria-hidden="true">
@@ -237,7 +244,7 @@
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- HOW IT WORKS + Content that follows unaffected -->
   <section class="section" id="how">
     <div class="wrap">
       <p class="kicker">How it works</p>

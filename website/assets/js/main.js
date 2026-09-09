@@ -98,6 +98,15 @@
     calculatorUnlocked.hidden = !isLoggedIn;
   }
 
+  // "The solution" (4 levels) uses the same any-account gate as Live
+  // pricing above.
+  const solutionLocked = document.getElementById("solutionLocked");
+  const solutionUnlocked = document.getElementById("solutionUnlocked");
+  if (solutionLocked && solutionUnlocked) {
+    solutionLocked.hidden = isLoggedIn;
+    solutionUnlocked.hidden = !isLoggedIn;
+  }
+
   /* ---------- "The problem" — admin-only ---------- */
   // Unlike Live pricing above (any of admin/courier/sender unlocks it),
   // this section requires the admin account specifically (username +

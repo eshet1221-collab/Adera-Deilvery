@@ -418,6 +418,12 @@ button { font: inherit; }
 .contact-list a { text-decoration: none; color: #fff; }
 .contact-list a:hover { text-decoration: underline; }
 
+.about-contact-list { margin-top: 28px; display: flex; flex-direction: column; gap: 14px; }
+.about-contact-list li { display: flex; align-items: center; gap: 12px; font-size: .95rem; color: var(--text-secondary); }
+.about-contact-list svg { width: 19px; height: 19px; color: var(--brand); flex: none; }
+.about-contact-list a { text-decoration: none; color: var(--text-primary); }
+.about-contact-list a:hover { text-decoration: underline; }
+
 .cta-form {
   background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-l);
   padding: 28px; display: flex; flex-direction: column; gap: 16px;
